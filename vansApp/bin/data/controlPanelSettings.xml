@@ -1,0 +1,246 @@
+<shiftBackgroundY>
+    <val_0>0.000000</val_0>
+</shiftBackgroundY>
+<projectionShift>
+    <val_0>0.000000</val_0>
+</projectionShift>
+<topMaskY>
+    <val_0>0.000000</val_0>
+</topMaskY>
+<cc>
+    <val_0>0.000000</val_0>
+</cc>
+<briVal>
+    <val_0>1.000000</val_0>
+</briVal>
+<conVal>
+    <val_0>1.000000</val_0>
+</conVal>
+<satVal>
+    <val_0>1.000000</val_0>
+</satVal>
+<gamma>
+    <val_0>1.000000</val_0>
+</gamma>
+<leftComp>
+    <val_0>100.000000</val_0>
+</leftComp>
+<rightComp>
+    <val_0>-100.000000</val_0>
+</rightComp>
+<topComp>
+    <val_0>212.000000</val_0>
+</topComp>
+<bottomComp>
+    <val_0>200.000000</val_0>
+</bottomComp>
+<volume>
+    <val_0>0.000000</val_0>
+</volume>
+<flipVideoH>
+    <val_0>0.000000</val_0>
+</flipVideoH>
+<flipVideoV>
+    <val_0>0.000000</val_0>
+</flipVideoV>
+<clipMin>
+    <val_0>66.666672</val_0>
+</clipMin>
+<clipMax>
+    <val_0>262.222229</val_0>
+</clipMax>
+<bFilterWhitePixels>
+    <val_0>1.000000</val_0>
+</bFilterWhitePixels>
+<showTrackerDebug>
+    <val_0>0.000000</val_0>
+</showTrackerDebug>
+<alphaThresh1>
+    <val_0>8.500000</val_0>
+</alphaThresh1>
+<alphaThresh2>
+    <val_0>140.250000</val_0>
+</alphaThresh2>
+<alphaBlur>
+    <val_0>21.000000</val_0>
+</alphaBlur>
+<satThresh>
+    <val_0>1.071111</val_0>
+</satThresh>
+<blurAmnt>
+    <val_0>1.000000</val_0>
+</blurAmnt>
+<zShift>
+    <val_0>500.000000</val_0>
+</zShift>
+<yShift>
+    <val_0>1545.173462</val_0>
+</yShift>
+<scaleE>
+    <val_0>0.774445</val_0>
+</scaleE>
+<fov>
+    <val_0>25.000000</val_0>
+</fov>
+<floorAngle>
+    <val_0>78.000000</val_0>
+</floorAngle>
+<layerSep>
+    <val_0>300.000000</val_0>
+</layerSep>
+<zoomOutZ>
+    <val_0>-515.000000</val_0>
+</zoomOutZ>
+<zoomOutY>
+    <val_0>-215.822266</val_0>
+</zoomOutY>
+<zoomInZ>
+    <val_0>0.000000</val_0>
+</zoomInZ>
+<zoomSpeed>
+    <val_0>0.026118</val_0>
+</zoomSpeed>
+<zoomWaitTimeF>
+    <val_0>0.233333</val_0>
+</zoomWaitTimeF>
+<handThresh>
+    <val_0>242.250000</val_0>
+</handThresh>
+<numHandFrames>
+    <val_0>5.666667</val_0>
+</numHandFrames>
+<handTrailLen>
+    <val_0>11.666667</val_0>
+</handTrailLen>
+<pyrLow>
+    <val_0>17.400002</val_0>
+</pyrLow>
+<pyrHigh>
+    <val_0>28.400002</val_0>
+</pyrHigh>
+<pyrLevels>
+    <val_0>4.488889</val_0>
+</pyrLevels>
+<cannyLow>
+    <val_0>90.000000</val_0>
+</cannyLow>
+<cannyHigh>
+    <val_0>170.000000</val_0>
+</cannyHigh>
+<numLinesSkip>
+    <val_0>6.550000</val_0>
+</numLinesSkip>
+<lineMin>
+    <val_0>0.993333</val_0>
+</lineMin>
+<lineMax>
+    <val_0>1.031111</val_0>
+</lineMax>
+<lineAlpha>
+    <val_0>45.333336</val_0>
+</lineAlpha>
+<lineDarkness>
+    <val_0>0.908333</val_0>
+</lineDarkness>
+<lineWidth>
+    <val_0>5.000000</val_0>
+</lineWidth>
+<diffAmnt>
+    <val_0>0.120000</val_0>
+</diffAmnt>
+<lineLength>
+    <val_0>191.500000</val_0>
+</lineLength>
+<numLinesInX>
+    <val_0>63.666664</val_0>
+</numLinesInX>
+<thicknessFg>
+    <val_0>2.400000</val_0>
+</thicknessFg>
+<fieldBlurPct>
+    <val_0>0.010000</val_0>
+</fieldBlurPct>
+<fieldMaxLineLen>
+    <val_0>25.694445</val_0>
+</fieldMaxLineLen>
+<fieldMinBri>
+    <val_0>76.500000</val_0>
+</fieldMinBri>
+<fieldMaxBri>
+    <val_0>255.000000</val_0>
+</fieldMaxBri>
+<fieldLineWMin>
+    <val_0>0.295000</val_0>
+</fieldLineWMin>
+<fieldLineWMax>
+    <val_0>2.851667</val_0>
+</fieldLineWMax>
+<fieldAlphaFade>
+    <val_0>24.488890</val_0>
+</fieldAlphaFade>
+<fieldMaxLineLenFg>
+    <val_0>18.194445</val_0>
+</fieldMaxLineLenFg>
+<fieldMinBriFg>
+    <val_0>0.000000</val_0>
+</fieldMinBriFg>
+<fieldMaxBriFg>
+    <val_0>192.666672</val_0>
+</fieldMaxBriFg>
+<diffThresh>
+    <val_0>20.000000</val_0>
+</diffThresh>
+<blendAmnt>
+    <val_0>0.950000</val_0>
+</blendAmnt>
+<videoBrightness>
+    <val_0>0.000000</val_0>
+</videoBrightness>
+<speedSmoothPct>
+    <val_0>0.638889</val_0>
+</speedSmoothPct>
+<minSmoothedSpeed>
+    <val_0>20.000000</val_0>
+</minSmoothedSpeed>
+<maxSmoothedSpeed>
+    <val_0>79.166672</val_0>
+</maxSmoothedSpeed>
+<sceneTimeSecs>
+    <val_0>52.000000</val_0>
+</sceneTimeSecs>
+<pencilMinBri>
+    <val_0>40.000000</val_0>
+</pencilMinBri>
+<pencilMaxBri>
+    <val_0>230.000000</val_0>
+</pencilMaxBri>
+<maxSunPct>
+    <val_0>0.722222</val_0>
+</maxSunPct>
+<minSunPct>
+    <val_0>0.205556</val_0>
+</minSunPct>
+<maxDoorPct>
+    <val_0>0.611111</val_0>
+</maxDoorPct>
+<minDoorPct>
+    <val_0>0.400000</val_0>
+</minDoorPct>
+<doHandTurn>
+    <val_0>0.000000</val_0>
+</doHandTurn>
+<depthSmooth>
+    <val_0>0.895000</val_0>
+</depthSmooth>
+<windowTimeFactor>
+    <val_0>0.396667</val_0>
+</windowTimeFactor>
+<floorFilter>
+    <val_0>0.000000</val_0>
+</floorFilter>
+<floorStartY>
+    <val_0>82.222221</val_0>
+</floorStartY>
+<floorFilterVal>
+    <val_0>1.144444</val_0>
+</floorFilterVal>
