@@ -1,13 +1,18 @@
 #pragma once 
 #include "ofxOpenCv.h"
+#include "Graph.h"
+
 
 class trackBlob{
+    
 	public:
 	
 	trackBlob(){
 		b = 0.0;
 		id = -1;
 		lightAmnt = 0.0;
+        
+        speedGraph.setup("speed", 1.98);
 	}
 	
 	void cloneFromBlob(ofxCvBlob & b){
@@ -31,7 +36,9 @@ class trackBlob{
 	void keepAlive(){
 		timeSeen = ofGetElapsedTimef() - timeFirstSeen;
 		bMatched = true;
-		b = 1.0;		
+		b = 1.0;	
+        
+        speedGraph.addSample(speed.length());
 	}
 	
 	void debugDraw(){
@@ -46,7 +53,14 @@ class trackBlob{
 		ofLine(cvBlob.centroid, cvBlob.centroid + speed * 10.0);
 		
 		ofDrawBitmapString(str, cvBlob.boundingRect.x, cvBlob.boundingRect.y);
+        
+        //speedGraph.draw(cvBlob.centroid.x, cvBlob.centroid.y + 100);
+        
 	}
+    
+    
+    Graph speedGraph;
+    
 	
 	ofxCvBlob cvBlob;
 	

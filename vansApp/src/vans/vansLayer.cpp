@@ -85,18 +85,36 @@ void vansLayer::update(float speedComp){
 //------------------------------------------------------------------------------------------------------------
 void vansLayer::checkInteraction( trackerManager * tracker ){
 	trackerMan = tracker;
+    
+    
 	
 	vector <trackBlob> feetBlobs = trackerMan->feetTracker.blobs;
+    
+    // [zach] this is accessing the blobs graph objects:
+    
+    for(int i = 0; i < feetBlobs.size(); i++){
+        if( feetBlobs[i].speedGraph.getTriggered() == true ){
+            graphicParticle p;
+            ofPoint speed = feetBlobs[i].speed;
+			speed.y = fabs(speed.y) * -0.2;
+			
+			p.setup( feetBlobs[i].cvBlob.centroid, speed, ofRandom(0.3, 0.6) );
+			p.setImage( &graphics[ (int)ofRandom(0, (float)graphics.size() * 0.99) ] );
+			pTests.push_back(p);
+        }
+    }
+    
+    
 	for(int i = 0; i < feetBlobs.size(); i++){
 		if( feetBlobs[i].speed.y * feetBlobs[i].preSpeed.y < -0.3 ){
-			graphicParticle p;
+			/*graphicParticle p;
 			
 			ofPoint speed = feetBlobs[i].speed;
 			speed.y = fabs(speed.y) * -0.2;
 			
 			p.setup( feetBlobs[i].cvBlob.centroid, speed, ofRandom(0.3, 0.6) );
 			p.setImage( &graphics[ (int)ofRandom(0, (float)graphics.size() * 0.99) ] );
-			pTests.push_back(p);
+			pTests.push_back(p);*/
 		}
 //		if( feetBlobs[i].speed.x * feetBlobs[i].preSpeed.x < -0.3 ){
 //			graphicParticle p;

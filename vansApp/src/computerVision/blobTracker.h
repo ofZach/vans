@@ -94,6 +94,13 @@ class blobTracker{
 					}
 				ofPopMatrix();
 			ofPopStyle();
+            
+            
+            for (int i = 0; i < blobs.size(); i++){
+                blobs[i].speedGraph.draw(x,y+ i * 34);
+            }
+            
+            
 		}
 		
 		int curId;
