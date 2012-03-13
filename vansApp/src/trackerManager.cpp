@@ -167,7 +167,7 @@ void trackerManager::recordFrames(bool bTrue){
 }
 
 void trackerManager::draw(float x, float y){
-	draw(x,y,alpha.getWidth(), alpha.getHeight());
+	draw(x,y,alpha.getWidth(), alpha.getHeight() * 2.0);
 }
 
 void trackerManager::draw(float x, float y, float w, float h){
@@ -175,17 +175,19 @@ void trackerManager::draw(float x, float y, float w, float h){
 	
 	ofSetColor(255);
 	if( !guiPtr->getValueB("showMasked") ){	
-		CT.trackingResults.draw(x, y, w, h);
+		CT.trackingResults.draw(x, y, w, h * 0.5);
 	}else{
-		feetImage.draw(x,y,w,h);
+		feetImage.draw(x,y,w,h * 0.5);
 	}
 	
-	feetFinder.draw(x,y,w,h);
-	feetTracker.draw(x,y,w,h);
+	feetFinder.draw(x,y,w,h * 0.5);
+	feetTracker.draw(x,y,w,h * 0.5);
 		
 	ofSetColor(CT.trackedColor);
 	ofRect(x+2, y+2, 15, 15);
-
+	
+	feetTracker.drawGraphs(x,y+h*0.5,w,h*0.5);
+	
 	ofPopStyle();	
 }
 	

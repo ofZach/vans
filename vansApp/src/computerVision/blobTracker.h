@@ -84,7 +84,7 @@ class blobTracker{
 		
 		void draw(float x, float y, float _w, float _h){
 			if( w == 0 ) return;
-			
+						
 			ofPushStyle();
 				ofPushMatrix();
 					ofTranslate(x, y, 0);
@@ -94,13 +94,16 @@ class blobTracker{
 					}
 				ofPopMatrix();
 			ofPopStyle();
-            
-            
-            for (int i = 0; i < blobs.size(); i++){
-                blobs[i].speedGraph.draw(x,y+ i * 34);
-            }
-            
-            
+		}
+		
+		void drawGraphs(float x, float y, float w, float h){
+			ofPushStyle();
+				ofSetColor(130, 130, 130);
+				ofRect(x,y,w,h);
+				for (int i = 0; i < blobs.size(); i++){
+					blobs[i].speedGraph.draw(x, y+ i * 34);
+				}
+			ofPopStyle;
 		}
 		
 		int curId;

@@ -121,10 +121,5 @@ void colorTracker::track(ofxCvColorImage & colorPixels){
         
     }
 
-    
-    
-    
-
-
 }
     

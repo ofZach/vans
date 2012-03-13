@@ -15,7 +15,7 @@ bool bFirstSetup = false;
 bool bNeedsSetup = true;
 bool bRecordFrames = false;
 
-bool bLaptop = true;
+bool bLaptop = false;
      
 //--------------------------------------------------------------
 void testApp::setup(){	
@@ -108,7 +108,7 @@ void testApp::setup(){
 
 		gui.setWhichPanel(2);
 		gui.setWhichColumn(0);
-		gui.addDrawableRect("colorTracker", &tracker, 640, 480);
+		gui.addDrawableRect("colorTracker", &tracker, 500, 750);
 		gui.addSlider("blobTrackerDist", "trackerDist", 30, 4, 400, true);
 
 		gui.setWhichColumn(1);
