@@ -58,18 +58,13 @@ void colorTracker::track(ofxCvColorImage & colorPixels){
         hsv = color;
         hsv.convertRgbToHsv();
         
-        bUseHueRange = true;
-        bUseSatRange = true;
-        bUseValRange = true;
         
         hueRange.val = trackedColor.getHue();
-        hueRange.spread = 100;
+        
+        
         
         satRange.val = trackedColor.getSaturation();
-        satRange.spread = 100;
-        
         valRange.val = trackedColor.getBrightness();
-        valRange.spread = 100;
         
         unsigned char * testPixels = hsv.getPixels();
         unsigned char * resultPixels = trackingResults.getPixels();
