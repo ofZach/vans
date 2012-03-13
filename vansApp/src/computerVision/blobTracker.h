@@ -97,7 +97,7 @@ class blobTracker{
             
             
             for (int i = 0; i < blobs.size(); i++){
-                blobs[i].speedGraph.draw(x,y+ i * 34);
+                blobs[i].graphs[1].draw(x,y+ i * 34);
             }
             
             
