@@ -15,16 +15,12 @@ void trackerManager::setup(float w, float h){
 	t1 = -1.0;
 	curId = 0;
 	statePct = 0.0;
-		
-	state = TRACKER_NONE_LONG;
-    
     
 }	
 
 void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alpha, ofxCvGrayscaleImage & depth){
 	
 	if( _rgb.getWidth() == 0 ) return;
-	
 	if( color.getWidth() != _rgb.getWidth() ){
 		color.clear(); 
 		alpha.clear(); 
@@ -34,40 +30,11 @@ void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alph
 		depthImage.allocate(depth.getWidth(), depth.getHeight());
 	}
     
-
+	color = _rgb; 
 	depthImage = depth;
 	
-	// APPLIES A REVERSE GRADIENT TO THE IMAGE TO REMOVE FLOOR
 	
-	if( guiPtr->getValueB("floorFilter") ){
-	
-		unsigned char * pix = _alpha.getPixels();
-		int numW = _alpha.getWidth();
-		int numH = _alpha.getHeight();
-		
-		int startY = ofClamp(numH - (guiPtr->getValueF("floorStartY")-1), 0, numH-1);
-		
-		float valPerLine = guiPtr->getValueI("floorFilterVal");
-		float valReduce	 = valPerLine;
-		for(int y = startY; y < numH; y++){
-			for(int x = 0; x < numW; x++){
-				int index = x + y * numW; 
-				
-				int p = pix[index];
-				p -= valReduce;
-				if( p < 0 ){ 
-					p = 0;
-				}
-				
-				pix[index] = p;
-			}
-			valReduce += valPerLine;
-		}
-		
-		_alpha.flagImageChanged();
-	}
-		
-	
+	//MASK
 	alpha = _alpha;
 	
 	alpha.blur(3); 
@@ -89,11 +56,10 @@ void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alph
 	cvAnd(CT.trackingResults.getCvImage(), alpha.getCvImage(), feetImage.getCvImage());
 	feetImage.flagImageChanged();
 	feetFinder.findContours(feetImage, guiPtr->getValueI("minFeetSize"), guiPtr->getValueI("maxFeetSize"), 10, false, false);
-
-	color = _rgb; 
+	
+	feetTracker.track(feetFinder, guiPtr->getValueI("trackerDist"));
 	
 	//BLIT THAT SHIT
-	
 	unsigned char * rgb = color.getPixels();
 	unsigned char * rgba = rgbaPix.getPixels();
 	unsigned char * a = alpha.getPixels();
@@ -204,7 +170,8 @@ void trackerManager::draw(float x, float y, float w, float h){
 	}
 	
 	feetFinder.draw(x,y,w,h);
-	
+	feetTracker.draw(x,y,w,h);
+		
 	ofSetColor(CT.trackedColor);
 	ofRect(x+2, y+2, 15, 15);
 

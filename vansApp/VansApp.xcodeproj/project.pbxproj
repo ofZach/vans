@@ -13,7 +13,7 @@
 		E40BC4811507BF9200EA7C25 /* renderLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E40BC47A1507BF9200EA7C25 /* renderLayer.cpp */; };
 		E40BC4821507BF9200EA7C25 /* sceneLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E40BC47C1507BF9200EA7C25 /* sceneLayer.cpp */; };
 		E40BC4831507BF9200EA7C25 /* sceneLayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E40BC47E1507BF9200EA7C25 /* sceneLayout.cpp */; };
-		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
+		E4328149138ABC9F0047C5CB /* openFrameworks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworks.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
 		E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */; };
 		E45BE97D0E8CC7DD009D7055 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9730E8CC7DD009D7055 /* AudioToolbox.framework */; };
@@ -59,6 +59,8 @@
 		E475B1F4145EDE4B00654C9E /* tilt.c in Sources */ = {isa = PBXBuildFile; fileRef = E475B1B4145EDE4B00654C9E /* tilt.c */; };
 		E475B1F5145EDE4B00654C9E /* usb_libusb10.c in Sources */ = {isa = PBXBuildFile; fileRef = E475B1B5145EDE4B00654C9E /* usb_libusb10.c */; };
 		E475B1F6145EDE4B00654C9E /* usb-1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E475B1BD145EDE4B00654C9E /* usb-1.0.a */; };
+		E47A5601150FCACC00EB31CA /* blobTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47A55FD150FCACC00EB31CA /* blobTracker.cpp */; };
+		E47A5605150FCAE000EB31CA /* trackBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47A5603150FCAE000EB31CA /* trackBlob.cpp */; };
 		E486AF1F142F638700B45E02 /* colorCorrection.frag in Sources */ = {isa = PBXBuildFile; fileRef = E486AF1E142F638700B45E02 /* colorCorrection.frag */; };
 		E4AC9F9D1507BCE300656AF1 /* vansApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4AC9F931507BCE300656AF1 /* vansApp.cpp */; };
 		E4AC9FA01507BCE300656AF1 /* vansLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4AC9F991507BCE300656AF1 /* vansLayer.cpp */; };
@@ -276,6 +278,10 @@
 		E475B1ED145EDE4B00654C9E /* libusb0_x86.dll */ = {isa = PBXFileReference; lastKnownFileType = file; name = libusb0_x86.dll; path = "src/addons/ofxKinect/libs/libusb/win/inf/xbox nui motor/x86/libusb0_x86.dll"; sourceTree = SOURCE_ROOT; };
 		E475B1EE145EDE4B00654C9E /* Xbox_NUI_Motor.cat */ = {isa = PBXFileReference; lastKnownFileType = file; name = Xbox_NUI_Motor.cat; path = "src/addons/ofxKinect/libs/libusb/win/inf/xbox nui motor/Xbox_NUI_Motor.cat"; sourceTree = SOURCE_ROOT; };
 		E475B1EF145EDE4B00654C9E /* Xbox_NUI_Motor.inf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Xbox_NUI_Motor.inf; path = "src/addons/ofxKinect/libs/libusb/win/inf/xbox nui motor/Xbox_NUI_Motor.inf"; sourceTree = SOURCE_ROOT; };
+		E47A55FD150FCACC00EB31CA /* blobTracker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = blobTracker.cpp; path = src/computerVision/blobTracker.cpp; sourceTree = SOURCE_ROOT; };
+		E47A55FE150FCACC00EB31CA /* blobTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = blobTracker.h; path = src/computerVision/blobTracker.h; sourceTree = SOURCE_ROOT; };
+		E47A5603150FCAE000EB31CA /* trackBlob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = trackBlob.cpp; path = src/computerVision/trackBlob.cpp; sourceTree = SOURCE_ROOT; };
+		E47A5604150FCAE000EB31CA /* trackBlob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = trackBlob.h; path = src/computerVision/trackBlob.h; sourceTree = SOURCE_ROOT; };
 		E486AF1E142F638700B45E02 /* colorCorrection.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = colorCorrection.frag; path = bin/data/shaders/colorCorrection.frag; sourceTree = SOURCE_ROOT; };
 		E4AC9F931507BCE300656AF1 /* vansApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vansApp.cpp; sourceTree = "<group>"; };
 		E4AC9F941507BCE300656AF1 /* vansApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vansApp.h; sourceTree = "<group>"; };
@@ -375,7 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4EB6799138ADC1D00A09F29 /* GLUT.framework in Frameworks */,
-				E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */,
+				E4328149138ABC9F0047C5CB /* openFrameworks.a in Frameworks */,
 				E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */,
 				E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */,
 				E45BE97D0E8CC7DD009D7055 /* AudioToolbox.framework in Frameworks */,
@@ -453,7 +459,7 @@
 		E4328144138ABC890047C5CB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E4328148138ABC890047C5CB /* openFrameworksDebug.a */,
+				E4328148138ABC890047C5CB /* openFrameworks.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1139,6 +1145,10 @@
 				E4F0B30A142B39FD00483D32 /* liveInput.h */,
 				116EA88D150FA63A004EBBD3 /* colorTracker.cpp */,
 				116EA88E150FA63B004EBBD3 /* colorTracker.h */,
+				E47A55FD150FCACC00EB31CA /* blobTracker.cpp */,
+				E47A55FE150FCACC00EB31CA /* blobTracker.h */,
+				E47A5603150FCAE000EB31CA /* trackBlob.cpp */,
+				E47A5604150FCAE000EB31CA /* trackBlob.h */,
 			);
 			name = computerVision;
 			path = src/computerVision;
@@ -1199,10 +1209,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		E4328148138ABC890047C5CB /* openFrameworksDebug.a */ = {
+		E4328148138ABC890047C5CB /* openFrameworks.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = openFrameworksDebug.a;
+			path = openFrameworks.a;
 			remoteRef = E4328147138ABC890047C5CB /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1305,6 +1315,8 @@
 				E40BC4821507BF9200EA7C25 /* sceneLayer.cpp in Sources */,
 				E40BC4831507BF9200EA7C25 /* sceneLayout.cpp in Sources */,
 				116EA88F150FA63B004EBBD3 /* colorTracker.cpp in Sources */,
+				E47A5601150FCACC00EB31CA /* blobTracker.cpp in Sources */,
+				E47A5605150FCAE000EB31CA /* trackBlob.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

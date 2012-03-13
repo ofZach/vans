@@ -47,7 +47,7 @@
     <val_0>66.666672</val_0>
 </clipMin>
 <clipMax>
-    <val_0>262.222229</val_0>
+    <val_0>211.111115</val_0>
 </clipMax>
 <bFilterWhitePixels>
     <val_0>1.000000</val_0>
@@ -245,14 +245,26 @@
     <val_0>1.144444</val_0>
 </floorFilterVal>
 <distance>
-    <val_0>77.916664</val_0>
+    <val_0>133.166672</val_0>
 </distance>
 <r>
-    <val_0>134.583344</val_0>
+    <val_0>157.250000</val_0>
 </r>
 <g>
     <val_0>11.333334</val_0>
 </g>
 <b>
-    <val_0>29.750000</val_0>
+    <val_0>56.666668</val_0>
 </b>
+<showMasked>
+    <val_0>1.000000</val_0>
+</showMasked>
+<minFeetSize>
+    <val_0>60.000000</val_0>
+</minFeetSize>
+<maxFeetSize>
+    <val_0>4900.000000</val_0>
+</maxFeetSize>
+<trackerDist>
+    <val_0>67.800003</val_0>
+</trackerDist>

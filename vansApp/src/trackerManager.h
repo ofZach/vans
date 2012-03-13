@@ -4,18 +4,10 @@
 #include "lineUtils.h"
 #include "ofxControlPanel.h"
 #include "colorTracker.h"
+#include "blobTracker.h"
 
 extern ofxControlPanel * guiPtr;
-
 using namespace lineUtils;
-
-typedef enum{
-	TRACKER_NONE_LONG = 0,
-	TRACKER_NONE_SHORT,
-	TRACKER_LOW,
-	TRACKER_MED,
-	TRACKER_HIGH
-}trackerState;
 
 class trackerManager : public ofBaseDraws{
 	public:
@@ -45,7 +37,6 @@ class trackerManager : public ofBaseDraws{
 		float lightSize;
 		float averageYPosition; 
 		
-		trackerState state;
 		float statePct;
 		trueVectorField field;
 		
@@ -71,9 +62,8 @@ class trackerManager : public ofBaseDraws{
 		float preArea;
 		float smoothedDiff;
     
-    
-        colorTracker  CT ;
-    
+		blobTracker feetTracker;
+		colorTracker  CT ;
 
 		float screenW, screenH;
 };

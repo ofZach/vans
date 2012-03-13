@@ -152,6 +152,8 @@ void vansLayer::drawIntoShader(){
 					ofColor col = ref.getColor(x + offset, y);
 					float val = powf(col.getLightness()/255.0, 1.5);
 					
+					ofSetColor( col * 0.4 );
+					
 					float angleAmount = ofMap(val, 1.0, 0.0, 0.0, 360.0, true);
 					if( bInvert ){
 						angleAmount = 360-angleAmount;
@@ -162,7 +164,7 @@ void vansLayer::drawIntoShader(){
 						if( bRandomPieStart ){
 							defAngle = ofRandom(-90, 270);
 						}
-						ofCircle(offset + x, y, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/5, pixelSize/1.2, true));
+						ofCircle(offset + x, y, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/8, pixelSize * 1.2, true));
 						//ofPieSlice(offset + x, y, defAngle, angleAmount, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/4, pixelSize/1.5, true));
 					}
 				}

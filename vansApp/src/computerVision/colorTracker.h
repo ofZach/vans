@@ -38,6 +38,7 @@ public:
     //--------------------------------------------
     unsigned char * grayPixels;
     ofxCvGrayscaleImage trackingResults;
+    ofxCvColorImage color;
     
     
 };

@@ -52,14 +52,13 @@ void testApp::setup(){
 		gui.setup("app controls", 0, 0, screenW, screenH-100, true, false);
 		gui.addPanel("kinect", 4, false);
 		gui.addPanel("scene params", 4, false);
-		gui.setInvisibleMode(true);
+		//gui.setInvisibleMode(true);
 
 		gui.setWhichPanel(0);
 				
 		float ratio = ofGetWidth()/ ofGetWindowWidth();
 			
 		gui.addChartPlotter("speed comp", guiStatVarPointer("speed comp", &speedComp, GUI_VAR_FLOAT, true, 2), 200, 50, 200, 0.1, 8.0);
-		gui.addChartPlotter("tracker comp", guiStatVarPointer("tracker state", (int *)&tracker.state, GUI_VAR_INT, true, 2), 200, 50, 200, -1, 6);
 		
 		gui.setWhichColumn(1);
 		gui.addChartPlotter("some chart", guiStatVarPointer("app fps", &appFrameRate, GUI_VAR_FLOAT, true, 2), 200, 50, 200, 5, 80);
@@ -110,8 +109,12 @@ void testApp::setup(){
 		gui.addDrawableRect("kinect live", &km.alphaSmoothed, 320, 240);
 		gui.addDrawableRect("kinect live", &km.color, 320, 240);
 
-		gui.setWhichColumn(3);
-		gui.addDrawableRect("colorTracker", &tracker, 400, 300);
+		gui.setWhichPanel(2);
+		gui.setWhichColumn(0);
+		gui.addDrawableRect("colorTracker", &tracker, 640, 480);
+		gui.addSlider("blobTrackerDist", "trackerDist", 30, 4, 400, true);
+
+		gui.setWhichColumn(1);
 		gui.addToggle("showMasked", true);
 		gui.addSlider("minFeetSize", "minFeetSize", 60, 0, 100000, true);
 		gui.addSlider("maxFeetSize", "maxFeetSize", 70*70, 100, 600000, true);

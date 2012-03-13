@@ -27,13 +27,19 @@ inline unsigned char colorDistance( unsigned char * colorPixA, unsigned char * c
 
 
 void colorTracker::track(ofxCvColorImage & colorPixels){
-    
+    if( color.getWidth() == 0 ){
+		color.allocate( colorPixels.getWidth(), colorPixels.getHeight() );
+	}
+	
+	color = colorPixels;
+	color.blur(11);
+	
     unsigned char colorTrack[3];
     colorTrack[0] = trackedColor.r;
     colorTrack[1] = trackedColor.g;
     colorTrack[2] = trackedColor.b;
     
-    unsigned char * testPixels = colorPixels.getPixels();
+    unsigned char * testPixels = color.getPixels();
     unsigned char * resultPixels = trackingResults.getPixels();
 
     int w = colorPixels.getWidth();
