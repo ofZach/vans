@@ -71,6 +71,8 @@ void vansLayer::setup(vector <ofFbo *> fboPtr){
 	
 	shaderFG.load("", "shaders/lines-fg.frag");
 	shaderBG.load("", "shaders/lines-bg.frag");
+    
+    presenceSmoothed = 0;
 
 }
 
@@ -145,6 +147,26 @@ void vansLayer::drawIntoShader(){
 		//then we can get ourselves composited into the scene with ofPixels curBuffPix
 	}
 		
+    
+    ofPoint midPt;
+    int count = 0;
+    vector <trackBlob> feetBlobs = trackerMan->feetTracker.blobs;
+    for(int i = 0; i < feetBlobs.size(); i++){
+        midPt += feetBlobs[i].cvBlob.centroid;
+        count++;
+    }
+    midPt /= (float)MAX(count, 1);
+    midPt.x /= 640.0;
+    midPt.y /= 480.0;
+    
+    if (count > 0){
+        presenceSmoothed = 0.93f * presenceSmoothed + 0.07f * 1.0;
+        midPtSmoothed = 0.91f * midPtSmoothed + 0.09f * midPt;
+    } else {
+        presenceSmoothed = 0.97f * presenceSmoothed + 0.03f * 0.0;
+    }
+    
+    
 	availableFbos[1]->begin();
 			
 		//comment out if you want to do acclum 
@@ -166,7 +188,9 @@ void vansLayer::drawIntoShader(){
 			shaderBG.begin();
 				shaderBG.setUniform1i("src_tex_unit0", 0);
 				shaderBG.setUniform1i("src_tex_unit2", 2);
-				
+                shaderBG.setUniform1f("mx", midPtSmoothed.x);
+                shaderBG.setUniform1f("my", midPtSmoothed.y);
+                shaderBG.setUniform1f("amount", presenceSmoothed);
 				glActiveTexture(GL_TEXTURE2);
 				glBindTexture(GL_TEXTURE_RECTANGLE_ARB, trackerMan->alpha.getTextureReference().texData.textureID);				
 

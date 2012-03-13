@@ -2,6 +2,9 @@
 #extension GL_ARB_texture_rectangle : enable
 uniform sampler2DRect src_tex_unit0;
 uniform sampler2DRect src_tex_unit2;
+uniform float mx;
+uniform float my;
+uniform float amount;
 
 
 /*
@@ -283,8 +286,15 @@ void main( void ){
 	vec4 color		= texture2DRect(src_tex_unit0, st);
 	vec4 alphaMask	= texture2DRect(src_tex_unit2, st);
 	
-	color.rgb = ContrastSaturationBrightness(color.rgb, 1.2, 0.0, 1.1);
 	
+    vec2 frag = gl_FragCoord.xy;
+    vec2 frag2 = vec2(frag.x / 1024.0,  frag.y / 768.0);
+    
+    float dist = distance(frag2, vec2(mx, my));
+    
+    color.rgb = ContrastSaturationBrightness(color.rgb, 1.2, dist*0.3, 1.1 + 1.1 * dist);
+	
+    
 	float val = 1.0 - RGBToHSL(color.rgb).z;
 	float comp = doMap(val, 0.0, 1.0, 0.0, 0.2, true);
 		
@@ -296,12 +306,14 @@ void main( void ){
 		gl_FragColor = vec4(1,1,1,1);
 	}
 	else{
-		if( mod( (st.x+st.y*0.1) + (st.x - st.y), 7.0 * detail) < val * 9.0 * detail){
+		if( mod( (st.x+st.y*100.0) + (st.x - st.y),  3.0 * detail) < val * dist * 10 * detail){
 			gl_FragColor = color;// * vec4(comp + 0.5, comp + 0.5, comp + 0.5, color.a);
 		}else{
 			gl_FragColor = color * 0.2 + vec4(1.0-comp, 1.0-comp, 1.0-comp, color.a);	
 		}
 	}
+    
+    gl_FragColor = (amount) * gl_FragColor + (1.0-amount) * texture2DRect(src_tex_unit0, st);
 
 }
 
