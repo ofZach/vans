@@ -17,6 +17,8 @@ void trackerManager::setup(float w, float h){
 	statePct = 0.0;
 		
 	state = TRACKER_NONE_LONG;
+    
+    
 }	
 
 void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alpha, ofxCvGrayscaleImage & depth){
@@ -30,6 +32,11 @@ void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alph
 		alpha.allocate(_alpha.getWidth(), _alpha.getHeight());
 		rgbaPix.allocate(_rgb.getWidth(), _rgb.getHeight(), OF_IMAGE_COLOR_ALPHA);
 	}
+    
+    
+    
+    CT.track(_rgb);
+    
 	
 	// APPLIES A REVERSE GRADIENT TO THE IMAGE TO REMOVE FLOOR
 	

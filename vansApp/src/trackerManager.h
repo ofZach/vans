@@ -3,6 +3,7 @@
 #include "trueVectorField.h"
 #include "lineUtils.h"
 #include "ofxControlPanel.h"
+#include "colorTracker.h"
 
 extern ofxControlPanel * guiPtr;
 
@@ -65,6 +66,10 @@ class trackerManager : public ofBaseDraws{
 		ofPoint preCentroid; 
 		float preArea;
 		float smoothedDiff;
+    
+    
+        colorTracker  CT ;
+    
 
 		float screenW, screenH;
 };

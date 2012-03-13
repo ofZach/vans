@@ -185,6 +185,9 @@ void testApp::draw(){
 	bFirstSetup = true;
 	if( bNeedsSetup )setup();
 
+    
+    
+    tracker.CT.trackingResults.draw(mouseX, mouseY);
 }
 
 //--------------------------------------------------------------
@@ -235,6 +238,9 @@ void testApp::keyReleased(int key){
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y ){
 	//water.repelFrom(x, y, 5.0);
+    
+    tracker.CT.distance = x;
+    
 }
 
 //--------------------------------------------------------------
@@ -245,6 +251,12 @@ void testApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
 
+    int xpix = ofMap(x, 0, ofGetWidth(), 0, tracker.color.getWidth());
+    int ypix = ofMap(y, 0, ofGetHeight(), 0, tracker.color.getHeight());
+    ofColor temp = tracker.color.getPixelsRef().getColor(xpix, ypix);
+    tracker.CT.setTrackedColor(temp);
+    
+    
 }
 
 //--------------------------------------------------------------

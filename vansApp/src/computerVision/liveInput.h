@@ -1,13 +1,13 @@
 #pragma once
 #include "ofMain.h"
 #include "ofxOpenCv.h"
-#include "ofxLibdc.h"
+//#include "ofxLibdc.h"
 #include "ofxChromaKey.h"
 #include "ofxKinect.h"
 #include "videoWarper.h"
 #include "seqManager.h"
 
-using namespace ofxLibdc;
+//using namespace ofxLibdc;
 
 typedef enum{
 	LIVE_TYPE_1394, 
@@ -145,9 +145,12 @@ class liveInput{
 		vector <ofPoint> fakes;
 
 		ofVideoGrabber camera;
+    
+    
+    
 
 	//protected:
-		Grabber dcCamera;
+		//Grabber dcCamera;
 		ofxChromaKey chroma; 
 		ofxKinect kinect;
 
