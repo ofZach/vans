@@ -8,6 +8,12 @@
 
 
 
+
+typedef struct {
+    int val;
+    int spread;
+} colorTrackingRange;
+
 class colorTracker{
     
     
@@ -16,10 +22,13 @@ public:
     
     colorTracker(){
         allocate(640,480);
+        bUseHSV = true;
     }
     
     void allocate(int w, int h){
         trackingResults.allocate(w,h);
+        hsv.setUseTexture(false);
+        hsv.allocate(w,h);
     }
     
     
@@ -40,6 +49,20 @@ public:
     ofxCvGrayscaleImage trackingResults;
     ofxCvColorImage color;
     
+    
+    bool bUseHSV;
+    
+    ofxCvColorImage hsv;
+    
+    // this is min / max, but designed to be cyclical for HUE, etc. 
+    
+    colorTrackingRange   hueRange;
+    colorTrackingRange   satRange;
+    colorTrackingRange   valRange;
+    
+    bool bUseHueRange;
+    bool bUseSatRange;
+    bool bUseValRange;
     
 };
 
