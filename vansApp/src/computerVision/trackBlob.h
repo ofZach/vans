@@ -9,6 +9,7 @@ class trackBlob{
 	
 	trackBlob(){
 		b = 0.0;
+		distSincePtAdded = 0.0;
 		id = -1;
 		lightAmnt = 0.0;
         
@@ -34,8 +35,9 @@ class trackBlob{
 		timeSeen = 0.0;
 		b = 1.0;
 		bMatched = true;
-        
+        distSincePtAdded = 0.0;
         prevSize = size = cvBlob.area;
+		trail.clear();
 	}
 	
 	void keepAlive(){
@@ -52,7 +54,26 @@ class trackBlob{
         graphs[3].addSample( depthVal );
         
         prevSize = size;
-        
+		
+		distSincePtAdded += dist;
+		
+		if( dist >= 1.0 ){
+			distSincePtAdded  = 0.0;
+			trail.addVertex(cvBlob.centroid);
+			if( trail.size() > 100 ){
+				vector <ofPoint> & t = trail.getVertices();
+				t.erase(t.begin(), t.begin()+1);
+			}
+		}
+		
+		smoothTrail = trail;
+		
+		if( smoothTrail.size() > 3 ){
+			for(int i = 1; i < smoothTrail.size(); i++){
+				smoothTrail[i] *= 0.1;
+				smoothTrail[i] += smoothTrail[i-1] * 0.9;
+			}
+		}
 	}
 	
 	void debugDraw(){
@@ -68,6 +89,9 @@ class trackBlob{
 		
 		ofDrawBitmapString(str, cvBlob.boundingRect.x, cvBlob.boundingRect.y);
         
+		smoothTrail.setClosed(false);
+		smoothTrail.draw();
+		
         //speedGraph.draw(cvBlob.centroid.x, cvBlob.centroid.y + 100);
         
 	}
@@ -85,7 +109,8 @@ class trackBlob{
     
     Graph graphs[4];
     
-    
+	ofPolyline smoothTrail;
+	ofPolyline trail;
 	
 	ofxCvBlob cvBlob;
 	
@@ -96,6 +121,7 @@ class trackBlob{
 	ofPoint preSpeed;
 	float lightAmnt;
 	float dist;
+	float distSincePtAdded;
 	float depthVal;
 	bool bMatched;
 	unsigned int id;

@@ -2,6 +2,7 @@
 #include "renderLayer.h"
 #include "sceneLayout.h"
 #include "graphicParticle.h"
+#include "textureTrail.h"
 
 class vansLayer : public renderLayer{
 
@@ -16,10 +17,12 @@ class vansLayer : public renderLayer{
 
 		ofShader shaderFG, shaderBG;
 		
+		ofImage trailImage;
 		vector <ofImage> graphics;
 		vector <ofImage> graphicsAccents;
 
 		vector <graphicParticle> pTests;
 		vector <graphicParticle> pTestsBack;
 
+		std::map <int, textureTrail> trails;
 };

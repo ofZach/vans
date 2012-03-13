@@ -68,6 +68,7 @@ void vansLayer::setup(vector <ofFbo *> fboPtr){
 		graphicsAccents[i].setAnchorPercent(0.5, 0.5);
 	}	
 	
+	trailImage.loadImage("graphicsTrails/swish01.png");
 	
 	shaderFG.load("", "shaders/lines-fg.frag");
 	shaderBG.load("", "shaders/lines-bg.frag");
@@ -95,6 +96,13 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
     // [zach] this is accessing the blobs graph objects:
     
     for(int i = 0; i < feetBlobs.size(); i++){
+		int id = feetBlobs[i].id;
+
+		if( feetBlobs[i].smoothTrail.size() > 10 ){
+			trails[id].setImage(&trailImage);		
+			trails[id].setPolyLine(feetBlobs[i].smoothTrail);
+		}
+		
         if( feetBlobs[i].graphs[1].getTriggered() == true ){
             ofPoint speed = feetBlobs[i].speed;
 			speed.y = fabs(speed.y) * -0.2;
@@ -200,9 +208,12 @@ void vansLayer::drawIntoShader(){
 			for(int i = 0; i < pTests.size(); i++){
 				pTests[i].draw();
 			}
-					
+			
+			std::map<int, textureTrail>::iterator i = trails.begin();
+			for( ; i != trails.end(); ++i ){
+				i->second.draw();
+			}
 						
-								
 			ofPopMatrix();
 
 		}

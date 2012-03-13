@@ -283,7 +283,7 @@ void main( void ){
 	vec4 color		= texture2DRect(src_tex_unit0, st);
 	vec4 alphaMask	= texture2DRect(src_tex_unit2, st);
 	
-	color.rgb = ContrastSaturationBrightness(color.rgb, 1.2, 0.0, 1.1);
+	color.rgb = ContrastSaturationBrightness(color.rgb, 0.8, 0.0, 1.1);
 	
 	float val = 1.0 - RGBToHSL(color.rgb).z;
 	float comp = doMap(val, 0.0, 1.0, 0.0, 0.2, true);
