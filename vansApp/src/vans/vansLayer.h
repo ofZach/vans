@@ -15,6 +15,8 @@ class vansLayer : public renderLayer{
 
 		ofShader shader;
 		
-		vector <ofImage> graphics;
+		vector <ofImage> graphicsBursts;
+		vector <ofImage> graphicsAccents;
+
 		vector <graphicParticle> pTests;
 };

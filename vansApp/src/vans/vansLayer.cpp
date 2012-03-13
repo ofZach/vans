@@ -60,6 +60,14 @@ void vansLayer::setup(vector <ofFbo *> fboPtr){
 		graphics[i].loadImage(dir.getPath(i));
 		graphics[i].setAnchorPercent(0.5, 0.5);
 	}
+
+	dir.listDir("graphicsAccents");
+	graphicsAccents.assign(dir.size(),ofImage());
+	for(int i = 0; i < dir.size(); i++){
+		graphicsAccents[i].loadImage(dir.getPath(i));
+		graphicsAccents[i].setAnchorPercent(0.5, 0.5);
+	}	
+	
 	
 	shader.load("", "shaders/woodCutOg.frag");
 
@@ -90,6 +98,16 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
 			p.setImage( &graphics[ (int)ofRandom(0, (float)graphics.size() * 0.99) ] );
 			pTests.push_back(p);
 		}
+//		if( feetBlobs[i].speed.x * feetBlobs[i].preSpeed.x < -0.3 ){
+//			graphicParticle p;
+//			
+//			ofPoint speed = feetBlobs[i].speed;
+//			speed.y = fabs(speed.y) * -0.2;
+//			
+//			p.setup( feetBlobs[i].cvBlob.centroid, speed, ofRandom(0.3, 0.6) );
+//			p.setImage( &graphics[ (int)ofRandom(0, (float)graphics.size() * 0.99) ] );
+//			pTests.push_back(p);
+//		}		
 	}
 	
 	for(int i = 0; i < pTests.size(); i++){
