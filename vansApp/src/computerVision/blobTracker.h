@@ -43,6 +43,8 @@ class blobTracker{
 				if( bFound ){
 					int k = whichToMatch;
 					
+					blobs[k].preSpeed = blobs[k].speed;
+					
 					blobs[k].speed *= 0.7;
 					blobs[k].speed += (blobs[k].cvBlob.centroid - newPt) * 0.3;			
 					blobs[k].dist = (blobs[k].cvBlob.centroid - newPt).length();

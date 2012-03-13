@@ -1,6 +1,5 @@
 #include "ofMain.h"
 #include "vansParticle.h"
-#include "imageResource.h"
 
 class graphicParticle : public vansParticle{
 	public:
@@ -12,27 +11,40 @@ class graphicParticle : public vansParticle{
 			vel	   = v;
 			targetScale  = s;
 			scale = 0.0;
+			reached = false;			
 		}
 		
-		virtual void setImage(string image){
-			img.loadImage(image, false, false);
+		virtual void setImage(ofImage * imgPtr){
+			img = imgPtr;
 		}
 		
 		virtual void update(){
 			vel *= drag;
 			pos += vel;
-			scale = ofLerp(scale, targetScale, 0.1);
+			
+			if( !reached ){
+				scale = ofLerp(scale, targetScale, 0.24);
+			}else{
+				scale = ofLerp(scale, targetScale, 0.1);
+			}
+			
 			if( fabs( scale - targetScale ) < 0.03 ){
 				targetScale = 0.0;
+				reached = true;
 			}
 		}
 		
-		virtual void draw(){
-		
+		virtual bool shouldKill(){
+			return ( reached && scale < 0.05 );
 		}
 		
+		virtual void draw(){
+			img->draw(pos.x, pos.y, img->getWidth() * scale, img->getHeight() * scale);
+		}
+		
+		bool reached;
 		float targetScale;
-		imageResource img;
+		ofImage * img;
 		
 //		ofPoint pos;
 //		ofPoint vel;

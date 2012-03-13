@@ -51,6 +51,7 @@ class trackBlob{
 	ofxCvBlob cvBlob;
 	
 	ofPoint speed;
+	ofPoint preSpeed;
 	float lightAmnt;
 	float dist;
 	bool bMatched;
