@@ -20,8 +20,8 @@ bool bLaptop = true;
 //--------------------------------------------------------------
 void testApp::setup(){	
 	
-	//ofHideCursor();
-	CGDisplayHideCursor(NULL);
+	ofHideCursor();
+	//CGDisplayHideCursor(NULL);
 
 	ofSetFrameRate(30);
 	ofSetLogLevel(OF_LOG_ERROR);
@@ -116,8 +116,8 @@ void testApp::setup(){
 
 		gui.setWhichColumn(1);
 		gui.addToggle("showMasked", true);
-		gui.addSlider("minFeetSize", "minFeetSize", 60, 0, 100000, true);
-		gui.addSlider("maxFeetSize", "maxFeetSize", 70*70, 100, 600000, true);
+		gui.addSlider("minFeetSize", "minFeetSize", 60, 0, 1000, true);
+		gui.addSlider("maxFeetSize", "maxFeetSize", 70*70, 100, 150*150, true);
 		
 		gui.addSlider("distance", "distance", 50, 0, 255, true);
 		gui.addSlider("red", "r", 200, 0, 255, true);
@@ -212,10 +212,9 @@ void testApp::keyPressed(int key){
 	
 	if( key == 'H' ){
 		hide = !hide;
-        if( hide ) CGDisplayHideCursor(NULL);//ofHideCursor();
+        if( hide ) ofHideCursor();
         else{
-			CGDisplayShowCursor(NULL);//ofShowCursor();
-			CGDisplayShowCursor(NULL);//ofShowCursor();
+			ofShowCursor();
 		}
 	}
 		
