@@ -55,9 +55,6 @@ void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alph
     CT.satRange.spread = guiPtr->getValueI("satSpread");
     CT.valRange.spread = guiPtr->getValueI("valSpread");
    
-    
-    
-    
 	CT.track(_rgb);
 	
 	if( feetImage.getWidth() == 0 ){
@@ -68,7 +65,7 @@ void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alph
 	feetImage.flagImageChanged();
 	feetFinder.findContours(feetImage, guiPtr->getValueI("minFeetSize"), guiPtr->getValueI("maxFeetSize"), 10, false, false);
 	
-	feetTracker.track(feetFinder, guiPtr->getValueI("trackerDist"));
+	feetTracker.track(feetFinder, depthImage, guiPtr->getValueI("trackerDist"));
 	
 	//BLIT THAT SHIT
 	unsigned char * rgb = color.getPixels();

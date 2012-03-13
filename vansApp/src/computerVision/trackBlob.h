@@ -12,7 +12,10 @@ class trackBlob{
 		id = -1;
 		lightAmnt = 0.0;
         
-        speedGraph.setup("speed", 1.98);
+        graphs[0].setup("speed", 1.98);
+        graphs[1].setup("x change", 0).setBidirectional(true);
+        graphs[2].setup("y change", 0).setBidirectional(true);
+        graphs[3].setup("z change", 0).setBidirectional(true);
 	}
 	
 	void cloneFromBlob(ofxCvBlob & b){
@@ -31,14 +34,25 @@ class trackBlob{
 		timeSeen = 0.0;
 		b = 1.0;
 		bMatched = true;
+        
+        prevSize = size = cvBlob.area;
 	}
 	
 	void keepAlive(){
+        
+        size = cvBlob.area;
+        
 		timeSeen = ofGetElapsedTimef() - timeFirstSeen;
 		bMatched = true;
 		b = 1.0;	
         
-        speedGraph.addSample(speed.length());
+        graphs[0].addSample(speed.length());
+        graphs[1].addSample(speed.x);
+        graphs[2].addSample(speed.y);
+        graphs[3].addSample( depthVal );
+        
+        prevSize = size;
+        
 	}
 	
 	void debugDraw(){
@@ -57,17 +71,32 @@ class trackBlob{
         //speedGraph.draw(cvBlob.centroid.x, cvBlob.centroid.y + 100);
         
 	}
+	
+	void drawGraphs(float x, float y){
+		ofPushStyle();
+			ofSetColor(0, 0, 0);
+			ofDrawBitmapString("blob" + ofToString(id), x, y+16);
+			for(int i = 0; i < 4; i++){
+				graphs[i].draw(x, y + 20 + i * 34);
+			}
+		ofPopStyle();
+	}
     
     
-    Graph speedGraph;
+    Graph graphs[4];
+    
     
 	
 	ofxCvBlob cvBlob;
 	
+    float prevSize;
+    float size;
+    
 	ofPoint speed;
 	ofPoint preSpeed;
 	float lightAmnt;
 	float dist;
+	float depthVal;
 	bool bMatched;
 	unsigned int id;
 	float timeFirstSeen;

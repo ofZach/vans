@@ -9,7 +9,7 @@ class blobTracker{
 			curId = 0;
 		}
 	
-		void track(ofxCvContourFinder &finder, float matchDist){
+		void track(ofxCvContourFinder &finder, ofxCvGrayscaleImage & depthImage, float matchDist){
 		
 			w = finder.getWidth();
 			h = finder.getHeight();
@@ -40,9 +40,15 @@ class blobTracker{
 					}
 				}
 				
+				ofPoint c = finder.blobs[j].centroid;
+				float depthVal = depthImage.getPixelsRef().getColor(c.x, c.y).r;
+				
 				if( bFound ){
 					int k = whichToMatch;
-					
+
+					blobs[k].depthVal *= 0.8;
+					blobs[k].depthVal += depthVal * 0.2;
+										
 					blobs[k].preSpeed = blobs[k].speed;
 					
 					blobs[k].speed *= 0.7;
@@ -63,6 +69,7 @@ class blobTracker{
 					
 					tmp.dist  = 20;
 					tmp.speed.set(0, 0, 0);
+					tmp.depthVal = depthVal;
 					tmpPts.push_back(tmp);
 					
 					//cout << " NO MATCH - ADDING FROM TMP " << curId << endl << endl;
@@ -101,7 +108,7 @@ class blobTracker{
 				ofSetColor(130, 130, 130);
 				ofRect(x,y,w,h);
 				for (int i = 0; i < blobs.size(); i++){
-					blobs[i].speedGraph.draw(x, y+ i * 34);
+					blobs[i].drawGraphs(x + 138 * i, y);
 				}
 			ofPopStyle;
 		}

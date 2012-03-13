@@ -46,7 +46,7 @@ void testApp::setup(){
 		ofSetVerticalSync(false);
 			
 		gui.loadFont("MONACO.TTF", 7);		
-		gui.setup("app controls", 0, 0, screenW, screenH-100, true, false);
+		gui.setup("app controls", 0, 0, screenW, screenH, true, false);
 		gui.addPanel("kinect", 4, false);
 		gui.addPanel("scene params", 4, false);
 		//gui.setInvisibleMode(true);
@@ -108,13 +108,14 @@ void testApp::setup(){
 
 		gui.setWhichPanel(2);
 		gui.setWhichColumn(0);
-		gui.addDrawableRect("colorTracker", &tracker, 500, 750);
-		gui.addSlider("blobTrackerDist", "trackerDist", 30, 4, 400, true);
+		gui.addDrawableRect("colorTracker", &tracker, 640, 480*2);
 
 		gui.setWhichColumn(1);
 		gui.addToggle("showMasked", true);
 		gui.addSlider("minFeetSize", "minFeetSize", 60, 0, 1000, true);
 		gui.addSlider("maxFeetSize", "maxFeetSize", 70*70, 100, 150*150, true);
+		gui.addSlider("blobTrackerDist", "trackerDist", 30, 4, 400, true);
+		
 		
 		gui.addSlider("distance", "distance", 50, 0, 255, true);
 		gui.addSlider("red", "r", 200, 0, 255, true);

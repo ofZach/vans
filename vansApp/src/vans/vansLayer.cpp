@@ -93,7 +93,7 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
     // [zach] this is accessing the blobs graph objects:
     
     for(int i = 0; i < feetBlobs.size(); i++){
-        if( feetBlobs[i].speedGraph.getTriggered() == true ){
+        if( feetBlobs[i].graphs[1].getTriggered() == true ){
             graphicParticle p;
             ofPoint speed = feetBlobs[i].speed;
 			speed.y = fabs(speed.y) * -0.2;
