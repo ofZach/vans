@@ -15,7 +15,7 @@ bool bFirstSetup = false;
 bool bNeedsSetup = true;
 bool bRecordFrames = false;
 
-bool bLaptop = false;
+bool bLaptop = true;
      
 //--------------------------------------------------------------
 void testApp::setup(){	

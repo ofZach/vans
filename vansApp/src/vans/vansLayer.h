@@ -12,11 +12,14 @@ class vansLayer : public renderLayer{
 		virtual void checkInteraction( trackerManager * tracker );
 		virtual void drawIntoShader();
 		virtual void draw();
+		void drawCirclesBackground();
 
-		ofShader shader;
+		ofShader shaderFG, shaderBG;
 		
 		vector <ofImage> graphics;
 		vector <ofImage> graphicsAccents;
 
 		vector <graphicParticle> pTests;
+		vector <graphicParticle> pTestsBack;
+
 };

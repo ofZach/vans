@@ -69,7 +69,8 @@ void vansLayer::setup(vector <ofFbo *> fboPtr){
 	}	
 	
 	
-	shader.load("", "shaders/woodCutOg.frag");
+	shaderFG.load("", "shaders/lines-fg.frag");
+	shaderBG.load("", "shaders/lines-bg.frag");
 
 }
 
@@ -77,7 +78,8 @@ void vansLayer::setup(vector <ofFbo *> fboPtr){
 void vansLayer::update(float speedComp){
 
 	if( ofGetFrameNum() % 30 == 0 ){
-		shader.load("", "shaders/woodCutOg.frag");
+		shaderFG.load("", "shaders/lines-fg.frag");
+		shaderBG.load("", "shaders/lines-bg.frag");
 	}
 
 }
@@ -94,13 +96,21 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
     
     for(int i = 0; i < feetBlobs.size(); i++){
         if( feetBlobs[i].graphs[1].getTriggered() == true ){
-            graphicParticle p;
             ofPoint speed = feetBlobs[i].speed;
 			speed.y = fabs(speed.y) * -0.2;
-			
+
+            graphicParticle p;
+            graphicParticle b;
+
 			p.setup( feetBlobs[i].cvBlob.centroid, speed, ofRandom(0.3, 0.6) );
 			p.setImage( &graphics[ (int)ofRandom(0, (float)graphics.size() * 0.99) ] );
+
+			b.setup( feetBlobs[i].cvBlob.centroid, speed * 0.7, ofRandom(0.3, 0.6) * 1.8 );
+			b.setImage( &graphicsAccents[ (int)ofRandom(0, (float)graphicsAccents.size() * 0.99) ] );
+
+			
 			pTests.push_back(p);
+			pTestsBack.push_back(b); 
         }
     }
     
@@ -113,6 +123,10 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
 	
 	for(int i = 0; i < pTests.size(); i++){
 		pTests[i].update();
+	}
+
+	for(int i = 0; i < pTestsBack.size(); i++){
+		pTestsBack[i].update();
 	}
 	
 	for(int k = 0; k < elements.size(); k++){
@@ -130,12 +144,7 @@ void vansLayer::drawIntoShader(){
 		
 		//then we can get ourselves composited into the scene with ofPixels curBuffPix
 	}
-	
-	bool bRandomPieStart = false;
-	bool bInvert = ofGetKeyPressed('i');
-	float spacing = 5.0;
-	float pixelSize = 3.0;
-	
+		
 	availableFbos[1]->begin();
 			
 		//comment out if you want to do acclum 
@@ -149,13 +158,33 @@ void vansLayer::drawIntoShader(){
 			ofPixelsRef ref = trackerMan->color.getPixelsRef();
 			ofPixelsRef alphaRef = trackerMan->alpha.getPixelsRef();
 			
-			//to update the pixels
+			//important - to update the pixels
 			trackerMan->alpha.draw(0,0);
-			
-			//do background
-			shader.begin();
-				shader.setUniform1i("src_tex_unit0", 0);
-				shader.setUniform1i("src_tex_unit2", 2);
+	
+	
+			//------ do background
+			shaderBG.begin();
+				shaderBG.setUniform1i("src_tex_unit0", 0);
+				shaderBG.setUniform1i("src_tex_unit2", 2);
+				
+				glActiveTexture(GL_TEXTURE2);
+				glBindTexture(GL_TEXTURE_RECTANGLE_ARB, trackerMan->alpha.getTextureReference().texData.textureID);				
+
+				glActiveTexture(GL_TEXTURE0);
+				ofSetColor(255);
+				trackerMan->color.draw(0,0);
+			shaderBG.end();
+								
+			ofSetColor(255);
+			for(int i = 0; i < pTestsBack.size(); i++){
+				pTestsBack[i].draw();
+			}
+
+
+			//------ do foreground
+			shaderFG.begin();
+				shaderFG.setUniform1i("src_tex_unit0", 0);
+				shaderFG.setUniform1i("src_tex_unit2", 2);
 
 				glActiveTexture(GL_TEXTURE2);
 				glBindTexture(GL_TEXTURE_RECTANGLE_ARB, trackerMan->alpha.getTextureReference().texData.textureID);				
@@ -163,104 +192,79 @@ void vansLayer::drawIntoShader(){
 				glActiveTexture(GL_TEXTURE0);
 				ofSetColor(255);
 				trackerMan->color.draw(0,0);
-			shader.end();
+			shaderFG.end();
 					
 			
-			//do foreground
-			float defAngle = -90;
-			
-			if( bInvert ){
-				ofSetColor(255, 255, 255);
-			}else{
-				ofSetColor(0, 0, 0);							
-			}
-			
-//			int c = 0;
-//			int index =0;
-//			for(int y = 0; y < ref.getHeight(); y+= spacing ){
-//				c++;
-//				float offset = 0;
-//				if( c % 2 == 0 ) offset = spacing/2.0;
-//				
-//				for(int x = 0; x < ref.getWidth(); x+= spacing ){					
-//					float maskScale = 1.0;
-//					float scale = 1.0;
-//					
-//					int alphaIndex = y * 640 + x; 
-//					
-//					if( alphaRef[alphaIndex] > 10 )continue;
-//				
-//					ofColor col = ref.getColor(x + offset, y);
-//					float val = powf(col.getLightness()/255.0, 1.5);
-//					
-//					ofSetColor( col * 0.4 );
-//					
-////					float angleAmount = ofMap(val, 1.0, 0.0, 0.0, 360.0, true);
-////					if( bInvert ){
-////						angleAmount = 360-angleAmount;
-////					}
-////					
-////				
-////					if( angleAmount > 0.0 ){
-//						if( bRandomPieStart ){
-//							defAngle = ofRandom(-90, 270);
-//						}
-//						ofCircle(offset + x, y, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/8, pixelSize * 1.2, true));
-//						//ofPieSlice(offset + x, y, defAngle, angleAmount, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/4, pixelSize/1.5, true));
-////					}
-//				}
-//			}	
-			
+			//drawCirclesBackground();			
 			ofSetColor(255);
 			for(int i = 0; i < pTests.size(); i++){
 				pTests[i].draw();
 			}
+					
 						
-//			unsigned char * alpha = trackerMan->alpha.getPixels();
-//		
-//			//stuff to play with - TODO add feet
-//			trackerMan->smoothedDepth; // depth of main blob 0-1 
-//			trackerMan->smoothedDiff; // amnt of movement 0-1
-//			//trackerMan->finder.blobs;  //blobs / contours
-//
-//			ofSetColor( 200 );
-//			trackerMan->color.draw(0, 0, screenW, screenH);
-//
-//			ofSetColor(100, 170, 255);
-//			for(int i = 0; i < bgPoints.size(); i++){
-//				ofCircle(bgPoints[i].x, bgPoints[i].y, bgPoints[i].z);
-//			}
-//			
-//			ofSetColor(255);
-//			//right now we just draw the rgba image in - nothing else
-//			//but we have access to seperate rgb and alpha pixels ( above ) and also contour 
-//			trackerMan->rgbaPix.draw(0, 0, screenW, screenH);
-//
-//			ofSetColor(50, 230, 78);
-//			for(int i = 0; i < fgPoints.size(); i++){
-//				ofCircle(fgPoints[i].x, fgPoints[i].y, fgPoints[i].z);
-//			}		
-//			
-//			//lets draw some of the contour pts
-//			if( trackerMan->finder.blobs.size() ){				
-//				ofPushStyle();
-//					ofPushMatrix();
-//						ofSetColor(40, 40, 40);
-//						ofScale( screenW/trackerMan->color.getWidth(), screenH/trackerMan->color.getHeight(), 1);
-//						for(int k = 0; k < trackerMan->finder.blobs[0].pts.size(); k+= 10){
-//							ofCircle( trackerMan->finder.blobs[0].pts[k], 1);
-//						}
-//					ofPopMatrix();
-//				ofPopStyle();
-//			}
-
-
+								
 			ofPopMatrix();
 
 		}
 																									
 	availableFbos[1]->end();	
 	
+}
+
+void vansLayer::drawCirclesBackground(){
+
+	bool bRandomPieStart = false;
+	bool bInvert = ofGetKeyPressed('i');
+	float spacing = 5.0;
+	float pixelSize = 3.0;
+	
+	float defAngle = -90;
+	
+	if( bInvert ){
+		ofSetColor(255, 255, 255);
+	}else{
+		ofSetColor(0, 0, 0);							
+	}
+		
+	
+	ofPixelsRef ref = trackerMan->color.getPixelsRef();
+	ofPixelsRef alphaRef = trackerMan->alpha.getPixelsRef();
+	
+	int c = 0;
+	int index =0;
+	for(int y = 0; y < ref.getHeight(); y+= spacing ){
+		c++;
+		float offset = 0;
+		if( c % 2 == 0 ) offset = spacing/2.0;
+		
+		for(int x = 0; x < ref.getWidth(); x+= spacing ){					
+			float maskScale = 1.0;
+			float scale = 1.0;
+			
+			int alphaIndex = y * 640 + x; 
+			
+			if( alphaRef[alphaIndex] > 10 )continue;
+		
+			ofColor col = ref.getColor(x + offset, y);
+			float val = powf(col.getLightness()/255.0, 1.5);
+			
+			ofSetColor( col * 0.4 );
+			
+//					float angleAmount = ofMap(val, 1.0, 0.0, 0.0, 360.0, true);
+//					if( bInvert ){
+//						angleAmount = 360-angleAmount;
+//					}
+//					
+//				
+//					if( angleAmount > 0.0 ){
+				if( bRandomPieStart ){
+					defAngle = ofRandom(-90, 270);
+				}
+				ofCircle(offset + x, y, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/8, pixelSize * 1.2, true));
+				//ofPieSlice(offset + x, y, defAngle, angleAmount, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/4, pixelSize/1.5, true));
+//					}
+		}
+	}
 }
 
 //------------------------------------------------------------------------------------------------------------

@@ -63,7 +63,8 @@
 		E47A5601150FCACC00EB31CA /* blobTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47A55FD150FCACC00EB31CA /* blobTracker.cpp */; };
 		E47A5605150FCAE000EB31CA /* trackBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47A5603150FCAE000EB31CA /* trackBlob.cpp */; };
 		E47A5627150FCFB900EB31CA /* graphicParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47A5626150FCFB900EB31CA /* graphicParticle.cpp */; };
-		E486AF1F142F638700B45E02 /* colorCorrection.frag in Sources */ = {isa = PBXBuildFile; fileRef = E486AF1E142F638700B45E02 /* colorCorrection.frag */; };
+		E47A57D7150FF6CB00EB31CA /* lines-bg.frag in Sources */ = {isa = PBXBuildFile; fileRef = E47A57D5150FF6CB00EB31CA /* lines-bg.frag */; };
+		E47A57D8150FF6CB00EB31CA /* lines-fg.frag in Sources */ = {isa = PBXBuildFile; fileRef = E47A57D6150FF6CB00EB31CA /* lines-fg.frag */; };
 		E4AC9F9D1507BCE300656AF1 /* vansApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4AC9F931507BCE300656AF1 /* vansApp.cpp */; };
 		E4AC9FA01507BCE300656AF1 /* vansLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4AC9F991507BCE300656AF1 /* vansLayer.cpp */; };
 		E4AC9FCC1507BCFB00656AF1 /* advImageSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4AC9FB31507BCFB00656AF1 /* advImageSequence.cpp */; };
@@ -290,7 +291,8 @@
 		E47A5622150FCED400EB31CA /* vansParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vansParticle.h; sourceTree = "<group>"; };
 		E47A5625150FCFB900EB31CA /* graphicParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphicParticle.h; sourceTree = "<group>"; };
 		E47A5626150FCFB900EB31CA /* graphicParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphicParticle.cpp; sourceTree = "<group>"; };
-		E486AF1E142F638700B45E02 /* colorCorrection.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = colorCorrection.frag; path = bin/data/shaders/colorCorrection.frag; sourceTree = SOURCE_ROOT; };
+		E47A57D5150FF6CB00EB31CA /* lines-bg.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "lines-bg.frag"; path = "bin/data/shaders/lines-bg.frag"; sourceTree = SOURCE_ROOT; };
+		E47A57D6150FF6CB00EB31CA /* lines-fg.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "lines-fg.frag"; path = "bin/data/shaders/lines-fg.frag"; sourceTree = SOURCE_ROOT; };
 		E4AC9F931507BCE300656AF1 /* vansApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vansApp.cpp; sourceTree = "<group>"; };
 		E4AC9F941507BCE300656AF1 /* vansApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vansApp.h; sourceTree = "<group>"; };
 		E4AC9F991507BCE300656AF1 /* vansLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vansLayer.cpp; sourceTree = "<group>"; };
@@ -890,7 +892,8 @@
 		E486AF1D142F638700B45E02 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
-				E486AF1E142F638700B45E02 /* colorCorrection.frag */,
+				E47A57D5150FF6CB00EB31CA /* lines-bg.frag */,
+				E47A57D6150FF6CB00EB31CA /* lines-fg.frag */,
 			);
 			name = shaders;
 			path = bin/data/shaders;
@@ -1283,7 +1286,6 @@
 				E4F0B36A142B39FD00483D32 /* sceneViewer.cpp in Sources */,
 				E4F0B36B142B39FD00483D32 /* testApp.cpp in Sources */,
 				E4F0B36C142B39FD00483D32 /* trackerManager.cpp in Sources */,
-				E486AF1F142F638700B45E02 /* colorCorrection.frag in Sources */,
 				E4C4B381143607C300128EA3 /* kinectManager.cpp in Sources */,
 				E47316A614372382008B450E /* guiQuad.cpp in Sources */,
 				E47316A714372382008B450E /* videoWarper.cpp in Sources */,
@@ -1341,6 +1343,8 @@
 				E47A5605150FCAE000EB31CA /* trackBlob.cpp in Sources */,
 				118E40F6150FDB89000333F8 /* Graph.cpp in Sources */,
 				E47A5627150FCFB900EB31CA /* graphicParticle.cpp in Sources */,
+				E47A57D7150FF6CB00EB31CA /* lines-bg.frag in Sources */,
+				E47A57D8150FF6CB00EB31CA /* lines-fg.frag in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
