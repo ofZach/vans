@@ -15,11 +15,11 @@ class kinectManager{
 			
 			numDevices = 0;
 			
-			//if( bLaptop == false ){
+			if( bLaptop == false ){
 				ofxKinect tmpKinect;
 				tmpKinect.init(true, false, false);			
 				numDevices = ofxKinect::numTotalDevices();
-			//}
+			}
 			
 			cout << " this many devices " << numDevices << endl; 
 	

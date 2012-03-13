@@ -26,9 +26,6 @@ void testApp::setup(){
 	ofSetFrameRate(30);
 	ofSetLogLevel(OF_LOG_ERROR);
 	
-	if( ofGetScreenWidth() > ofGetScreenHeight() ){
-		bLaptop = true;
-	}
 	
 	if( bFirstSetup ){
 	
