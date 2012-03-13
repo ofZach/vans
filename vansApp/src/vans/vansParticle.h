@@ -15,6 +15,10 @@ class vansParticle{
 			
 		}
 		
+		virtual bool shouldKill(){
+			return false;
+		}
+		
 		virtual void draw(){
 		
 		}

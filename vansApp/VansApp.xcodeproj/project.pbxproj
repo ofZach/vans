@@ -62,6 +62,7 @@
 		E475B1F6145EDE4B00654C9E /* usb-1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E475B1BD145EDE4B00654C9E /* usb-1.0.a */; };
 		E47A5601150FCACC00EB31CA /* blobTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47A55FD150FCACC00EB31CA /* blobTracker.cpp */; };
 		E47A5605150FCAE000EB31CA /* trackBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47A5603150FCAE000EB31CA /* trackBlob.cpp */; };
+		E47A5627150FCFB900EB31CA /* graphicParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47A5626150FCFB900EB31CA /* graphicParticle.cpp */; };
 		E486AF1F142F638700B45E02 /* colorCorrection.frag in Sources */ = {isa = PBXBuildFile; fileRef = E486AF1E142F638700B45E02 /* colorCorrection.frag */; };
 		E4AC9F9D1507BCE300656AF1 /* vansApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4AC9F931507BCE300656AF1 /* vansApp.cpp */; };
 		E4AC9FA01507BCE300656AF1 /* vansLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4AC9F991507BCE300656AF1 /* vansLayer.cpp */; };
@@ -286,6 +287,9 @@
 		E47A55FE150FCACC00EB31CA /* blobTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = blobTracker.h; path = src/computerVision/blobTracker.h; sourceTree = SOURCE_ROOT; };
 		E47A5603150FCAE000EB31CA /* trackBlob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = trackBlob.cpp; path = src/computerVision/trackBlob.cpp; sourceTree = SOURCE_ROOT; };
 		E47A5604150FCAE000EB31CA /* trackBlob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = trackBlob.h; path = src/computerVision/trackBlob.h; sourceTree = SOURCE_ROOT; };
+		E47A5622150FCED400EB31CA /* vansParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vansParticle.h; sourceTree = "<group>"; };
+		E47A5625150FCFB900EB31CA /* graphicParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphicParticle.h; sourceTree = "<group>"; };
+		E47A5626150FCFB900EB31CA /* graphicParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphicParticle.cpp; sourceTree = "<group>"; };
 		E486AF1E142F638700B45E02 /* colorCorrection.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = colorCorrection.frag; path = bin/data/shaders/colorCorrection.frag; sourceTree = SOURCE_ROOT; };
 		E4AC9F931507BCE300656AF1 /* vansApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vansApp.cpp; sourceTree = "<group>"; };
 		E4AC9F941507BCE300656AF1 /* vansApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vansApp.h; sourceTree = "<group>"; };
@@ -899,6 +903,9 @@
 				E4AC9F941507BCE300656AF1 /* vansApp.h */,
 				E4AC9F991507BCE300656AF1 /* vansLayer.cpp */,
 				E4AC9F9A1507BCE300656AF1 /* vansLayer.h */,
+				E47A5622150FCED400EB31CA /* vansParticle.h */,
+				E47A5625150FCFB900EB31CA /* graphicParticle.h */,
+				E47A5626150FCFB900EB31CA /* graphicParticle.cpp */,
 				E40BC4761507BF9200EA7C25 /* layerUtils */,
 			);
 			name = vans;
@@ -1333,6 +1340,7 @@
 				E47A5601150FCACC00EB31CA /* blobTracker.cpp in Sources */,
 				E47A5605150FCAE000EB31CA /* trackBlob.cpp in Sources */,
 				118E40F6150FDB89000333F8 /* Graph.cpp in Sources */,
+				E47A5627150FCFB900EB31CA /* graphicParticle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

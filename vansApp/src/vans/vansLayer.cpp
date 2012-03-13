@@ -52,6 +52,14 @@ void vansLayer::setup(vector <ofFbo *> fboPtr){
 	availableFbos = fboPtr; 
 	rotAngle = 0.0;
 	
+	ofDirectory dir;
+	dir.listDir("graphicsBursts");
+	
+	graphics.assign(dir.size(),ofImage());
+	for(int i = 0; i < dir.size(); i++){
+		graphics[i].loadImage(dir.getPath(i));
+		graphics[i].setAnchorPercent(0.5, 0.5);
+	}
 	
 	shader.load("", "shaders/woodCutOg.frag");
 
@@ -59,10 +67,6 @@ void vansLayer::setup(vector <ofFbo *> fboPtr){
 
 //------------------------------------------------------------------------------------------------------------
 void vansLayer::update(float speedComp){
-
-
-	
-	
 
 	if( ofGetFrameNum() % 30 == 0 ){
 		shader.load("", "shaders/woodCutOg.frag");
@@ -73,6 +77,42 @@ void vansLayer::update(float speedComp){
 //------------------------------------------------------------------------------------------------------------
 void vansLayer::checkInteraction( trackerManager * tracker ){
 	trackerMan = tracker;
+    
+    
+	
+	vector <trackBlob> feetBlobs = trackerMan->feetTracker.blobs;
+    
+    // [zach] this is accessing the blobs graph objects:
+    
+    for(int i = 0; i < feetBlobs.size(); i++){
+        if( feetBlobs[i].speedGraph.getTriggered() == true ){
+            graphicParticle p;
+            ofPoint speed = feetBlobs[i].speed;
+			speed.y = fabs(speed.y) * -0.2;
+			
+			p.setup( feetBlobs[i].cvBlob.centroid, speed, ofRandom(0.3, 0.6) );
+			p.setImage( &graphics[ (int)ofRandom(0, (float)graphics.size() * 0.99) ] );
+			pTests.push_back(p);
+        }
+    }
+    
+    
+	for(int i = 0; i < feetBlobs.size(); i++){
+		if( feetBlobs[i].speed.y * feetBlobs[i].preSpeed.y < -0.3 ){
+			/*graphicParticle p;
+			
+			ofPoint speed = feetBlobs[i].speed;
+			speed.y = fabs(speed.y) * -0.2;
+			
+			p.setup( feetBlobs[i].cvBlob.centroid, speed, ofRandom(0.3, 0.6) );
+			p.setImage( &graphics[ (int)ofRandom(0, (float)graphics.size() * 0.99) ] );
+			pTests.push_back(p);*/
+		}
+	}
+	
+	for(int i = 0; i < pTests.size(); i++){
+		pTests[i].update();
+	}
 	
 	for(int k = 0; k < elements.size(); k++){
 		elements[k]->checkInteraction(tracker);
@@ -92,8 +132,8 @@ void vansLayer::drawIntoShader(){
 	
 	bool bRandomPieStart = false;
 	bool bInvert = ofGetKeyPressed('i');
-	float spacing = 4.0;
-	float pixelSize = 3.7;
+	float spacing = 5.0;
+	float pixelSize = 3.0;
 	
 	availableFbos[1]->begin();
 			
@@ -134,41 +174,46 @@ void vansLayer::drawIntoShader(){
 				ofSetColor(0, 0, 0);							
 			}
 			
-			int c = 0;
-			int index =0;
-			for(int y = 0; y < ref.getHeight(); y+= spacing ){
-				c++;
-				float offset = 0;
-				if( c % 2 == 0 ) offset = spacing/2.0;
-				
-				for(int x = 0; x < ref.getWidth(); x+= spacing ){					
-					float maskScale = 1.0;
-					float scale = 1.0;
-					
-					int alphaIndex = y * 640 + x; 
-					
-					if( alphaRef[alphaIndex] > 10 )continue;
-				
-					ofColor col = ref.getColor(x + offset, y);
-					float val = powf(col.getLightness()/255.0, 1.5);
-					
-					ofSetColor( col * 0.4 );
-					
-					float angleAmount = ofMap(val, 1.0, 0.0, 0.0, 360.0, true);
-					if( bInvert ){
-						angleAmount = 360-angleAmount;
-					}
-					
-				
-					if( angleAmount > 0.0 ){
-						if( bRandomPieStart ){
-							defAngle = ofRandom(-90, 270);
-						}
-						ofCircle(offset + x, y, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/8, pixelSize * 1.2, true));
-						//ofPieSlice(offset + x, y, defAngle, angleAmount, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/4, pixelSize/1.5, true));
-					}
-				}
-			}	
+//			int c = 0;
+//			int index =0;
+//			for(int y = 0; y < ref.getHeight(); y+= spacing ){
+//				c++;
+//				float offset = 0;
+//				if( c % 2 == 0 ) offset = spacing/2.0;
+//				
+//				for(int x = 0; x < ref.getWidth(); x+= spacing ){					
+//					float maskScale = 1.0;
+//					float scale = 1.0;
+//					
+//					int alphaIndex = y * 640 + x; 
+//					
+//					if( alphaRef[alphaIndex] > 10 )continue;
+//				
+//					ofColor col = ref.getColor(x + offset, y);
+//					float val = powf(col.getLightness()/255.0, 1.5);
+//					
+//					ofSetColor( col * 0.4 );
+//					
+////					float angleAmount = ofMap(val, 1.0, 0.0, 0.0, 360.0, true);
+////					if( bInvert ){
+////						angleAmount = 360-angleAmount;
+////					}
+////					
+////				
+////					if( angleAmount > 0.0 ){
+//						if( bRandomPieStart ){
+//							defAngle = ofRandom(-90, 270);
+//						}
+//						ofCircle(offset + x, y, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/8, pixelSize * 1.2, true));
+//						//ofPieSlice(offset + x, y, defAngle, angleAmount, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/4, pixelSize/1.5, true));
+////					}
+//				}
+//			}	
+			
+			ofSetColor(255);
+			for(int i = 0; i < pTests.size(); i++){
+				pTests[i].draw();
+			}
 						
 //			unsigned char * alpha = trackerMan->alpha.getPixels();
 //		

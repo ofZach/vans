@@ -1,6 +1,7 @@
 #pragma once
 #include "renderLayer.h"
 #include "sceneLayout.h"
+#include "graphicParticle.h"
 
 class vansLayer : public renderLayer{
 
@@ -13,4 +14,7 @@ class vansLayer : public renderLayer{
 		virtual void draw();
 
 		ofShader shader;
+		
+		vector <ofImage> graphics;
+		vector <graphicParticle> pTests;
 };

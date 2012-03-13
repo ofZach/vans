@@ -293,9 +293,14 @@ void main( void ){
 	val *= 0.9;
 	detail = 1.0;
 	
-	if( alphaMask.r < 0.1 ){
-		gl_FragColor = vec4(1,1,1,1);
-	}else{
+	if( alphaMask.r < 0.2 ){
+		colorOg = color;
+		st.x *= -1.0;
+		//val *= 1.2;
+		//gl_FragColor = vec4(1,1,1,1);
+	}
+	
+	{
 		if( mod( (st.x+st.y*0.1) + (st.x - st.y), 7.0 * detail) < val * 9.0 * detail){
 			gl_FragColor = colorOg;// * vec4(comp + 0.5, comp + 0.5, comp + 0.5, color.a);
 		}else{
