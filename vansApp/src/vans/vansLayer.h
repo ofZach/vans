@@ -23,6 +23,11 @@ class vansLayer : public renderLayer{
 
 		vector <graphicParticle> pTests;
 		vector <graphicParticle> pTestsBack;
+    
+    
+        ofPoint midPtSmoothed;
+        float presenceSmoothed;
+    
 
 		std::map <int, textureTrail> trails;
 };
