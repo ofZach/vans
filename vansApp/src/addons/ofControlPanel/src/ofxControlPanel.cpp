@@ -103,11 +103,11 @@ void ofxControlPanel::setup(string controlPanelName, float panelX, float panelY,
 		addPanel(controlPanelName, 5, locked);
 	} 
 
-	ofAddListener(ofEvents().mousePressed, this, &ofxControlPanel::mousePressed);
-	ofAddListener(ofEvents().mouseReleased, this, &ofxControlPanel::mouseReleased);
-	ofAddListener(ofEvents().mouseDragged, this, &ofxControlPanel::mouseDragged);
-	ofAddListener(ofEvents().keyPressed, this, &ofxControlPanel::keyPressed);
-	ofAddListener(ofEvents().keyReleased, this, &ofxControlPanel::keyReleased);
+	ofAddListener(ofEvents.mousePressed, this, &ofxControlPanel::mousePressed);
+	ofAddListener(ofEvents.mouseReleased, this, &ofxControlPanel::mouseReleased);
+	ofAddListener(ofEvents.mouseDragged, this, &ofxControlPanel::mouseDragged);
+	ofAddListener(ofEvents.keyPressed, this, &ofxControlPanel::keyPressed);
+	ofAddListener(ofEvents.keyReleased, this, &ofxControlPanel::keyReleased);
 }
 
 //-----------------------------

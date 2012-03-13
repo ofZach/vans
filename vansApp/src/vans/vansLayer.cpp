@@ -162,7 +162,8 @@ void vansLayer::drawIntoShader(){
 						if( bRandomPieStart ){
 							defAngle = ofRandom(-90, 270);
 						}
-						ofPieSlice(offset + x, y, defAngle, angleAmount, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/4, pixelSize/1.5, true));
+						ofCircle(offset + x, y, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/5, pixelSize/1.2, true));
+						//ofPieSlice(offset + x, y, defAngle, angleAmount, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/4, pixelSize/1.5, true));
 					}
 				}
 			}	

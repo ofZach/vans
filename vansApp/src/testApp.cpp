@@ -110,7 +110,17 @@ void testApp::setup(){
 		gui.addDrawableRect("kinect live", &km.alphaSmoothed, 320, 240);
 		gui.addDrawableRect("kinect live", &km.color, 320, 240);
 
-			
+		gui.setWhichColumn(3);
+		gui.addDrawableRect("colorTracker", &tracker, 400, 300);
+		gui.addToggle("showMasked", true);
+		gui.addSlider("minFeetSize", "minFeetSize", 60, 0, 100000, true);
+		gui.addSlider("maxFeetSize", "maxFeetSize", 70*70, 100, 600000, true);
+		
+		gui.addSlider("distance", "distance", 50, 0, 255, true);
+		gui.addSlider("red", "r", 200, 0, 255, true);
+		gui.addSlider("green", "g", 60, 0, 255, true);
+		gui.addSlider("blue", "b", 40, 0, 255, true);
+		
 		//--- END VISION				
 										
 		//SETTINGS AND EVENTS
@@ -187,7 +197,7 @@ void testApp::draw(){
 
     
     
-    tracker.CT.trackingResults.draw(mouseX, mouseY);
+    //tracker.CT.trackingResults.draw(mouseX, mouseY);
 }
 
 //--------------------------------------------------------------
@@ -239,7 +249,7 @@ void testApp::keyReleased(int key){
 void testApp::mouseMoved(int x, int y ){
 	//water.repelFrom(x, y, 5.0);
     
-    tracker.CT.distance = x;
+    //tracker.CT.distance = x;
     
 }
 
@@ -251,10 +261,10 @@ void testApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
 
-    int xpix = ofMap(x, 0, ofGetWidth(), 0, tracker.color.getWidth());
-    int ypix = ofMap(y, 0, ofGetHeight(), 0, tracker.color.getHeight());
-    ofColor temp = tracker.color.getPixelsRef().getColor(xpix, ypix);
-    tracker.CT.setTrackedColor(temp);
+//    int xpix = ofMap(x, 0, ofGetWidth(), 0, tracker.color.getWidth());
+//    int ypix = ofMap(y, 0, ofGetHeight(), 0, tracker.color.getHeight());
+//    ofColor temp = tracker.color.getPixelsRef().getColor(xpix, ypix);
+//    tracker.CT.setTrackedColor(temp);
     
     
 }

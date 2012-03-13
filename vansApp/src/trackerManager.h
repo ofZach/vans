@@ -53,6 +53,9 @@ class trackerManager : public ofBaseDraws{
 		ofxCvGrayscaleImage alpha; 
 		ofxCvContourFinder finder; 
 		ofxCvGrayscaleImage depthImage;
+		ofxCvGrayscaleImage feetImage;
+		ofxCvContourFinder feetFinder;
+		
 		
 		ofImage rgbaPix;
 		vector <ofPoint> prePts;		

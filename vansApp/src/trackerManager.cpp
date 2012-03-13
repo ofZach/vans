@@ -34,11 +34,7 @@ void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alph
 		depthImage.allocate(depth.getWidth(), depth.getHeight());
 	}
     
-    
-    
-    CT.track(_rgb);
-    
-	
+
 	depthImage = depth;
 	
 	// APPLIES A REVERSE GRADIENT TO THE IMAGE TO REMOVE FLOOR
@@ -78,7 +74,21 @@ void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alph
 	alpha.threshold(guiPtr->getValueF("alphaThresh1"));
 	alpha.blur(guiPtr->getValueI("alphaBlur")); 
 	alpha.threshold(guiPtr->getValueF("alphaThresh2"), false);
-	alpha.blur(3); 		
+	alpha.blur(3);
+	
+	
+    //FEET 
+    CT.setTrackedColor(ofColor(guiPtr->getValueI("r"),guiPtr->getValueI("g"),guiPtr->getValueI("b")));
+	CT.distance = guiPtr->getValueI("distance");
+	CT.track(_rgb);
+	
+	if( feetImage.getWidth() == 0 ){
+		feetImage.allocate(CT.trackingResults.getWidth(), CT.trackingResults.getHeight());
+	}
+		
+	cvAnd(CT.trackingResults.getCvImage(), alpha.getCvImage(), feetImage.getCvImage());
+	feetImage.flagImageChanged();
+	feetFinder.findContours(feetImage, guiPtr->getValueI("minFeetSize"), guiPtr->getValueI("maxFeetSize"), 10, false, false);
 
 	color = _rgb; 
 	
@@ -180,11 +190,25 @@ void trackerManager::recordFrames(bool bTrue){
 }
 
 void trackerManager::draw(float x, float y){
-
+	draw(x,y,alpha.getWidth(), alpha.getHeight());
 }
 
 void trackerManager::draw(float x, float y, float w, float h){
+	ofPushStyle();
+	
+	ofSetColor(255);
+	if( !guiPtr->getValueB("showMasked") ){	
+		CT.trackingResults.draw(x, y, w, h);
+	}else{
+		feetImage.draw(x,y,w,h);
+	}
+	
+	feetFinder.draw(x,y,w,h);
+	
+	ofSetColor(CT.trackedColor);
+	ofRect(x+2, y+2, 15, 15);
 
+	ofPopStyle();	
 }
 	
 void trackerManager::debugDraw(){
