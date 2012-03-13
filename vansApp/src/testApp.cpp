@@ -123,7 +123,16 @@ void testApp::setup(){
 		gui.addSlider("red", "r", 200, 0, 255, true);
 		gui.addSlider("green", "g", 60, 0, 255, true);
 		gui.addSlider("blue", "b", 40, 0, 255, true);
+		gui.addToggle("useHsv", "bUseHsv", true);
+        gui.addToggle("trackHue", "trackHue", true);
+        gui.addSlider("hueSpread", "hueSpread", 100, 0, 255, true);
+        gui.addToggle("trackSat", "trackSat", true);
+        gui.addSlider("satSpread", "satSpread", 100, 0, 255, true);
+        gui.addToggle("trackVal", "trackVal", true);
+        gui.addSlider("valSpread", "valSpread", 100, 0, 255, true);
 		
+        
+        
 		//--- END VISION				
 										
 		//SETTINGS AND EVENTS
@@ -251,6 +260,8 @@ void testApp::keyReleased(int key){
 void testApp::mouseMoved(int x, int y ){
 	//water.repelFrom(x, y, 5.0);
     
+    
+    
     //tracker.CT.distance = x;
     
 }
@@ -263,12 +274,21 @@ void testApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
 
-//    int xpix = ofMap(x, 0, ofGetWidth(), 0, tracker.color.getWidth());
-//    int ypix = ofMap(y, 0, ofGetHeight(), 0, tracker.color.getHeight());
-//    ofColor temp = tracker.color.getPixelsRef().getColor(xpix, ypix);
-//    tracker.CT.setTrackedColor(temp);
+
     
+    if (button == 2){
+        int xpix = ofMap(x, 0, ofGetWidth(), 0, tracker.color.getWidth());
+        int ypix = ofMap(y, 0, ofGetHeight(), 0, tracker.color.getHeight());
+        ofColor temp = tracker.color.getPixelsRef().getColor(xpix, ypix);
+        gui.setValueI("r", temp.r);
+        gui.setValueI("g", temp.g);
+        gui.setValueI("b", temp.b);
+        
+    }
     
+//    gui.addSlider("red", "r", 200, 0, 255, true);
+//    gui.addSlider("green", "g", 60, 0, 255, true);
+//    gui.addSlider("blue", "b", 40, 0, 255, true);
 }
 
 //--------------------------------------------------------------

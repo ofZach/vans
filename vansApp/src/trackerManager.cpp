@@ -47,6 +47,17 @@ void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alph
     //FEET 
     CT.setTrackedColor(ofColor(guiPtr->getValueI("r"),guiPtr->getValueI("g"),guiPtr->getValueI("b")));
 	CT.distance = guiPtr->getValueI("distance");
+    CT.bUseHSV = guiPtr->getValueB("bUseHsv");
+    CT.bUseHueRange = guiPtr->getValueB("trackHue");
+    CT.bUseSatRange = guiPtr->getValueB("trackSat");
+    CT.bUseValRange = guiPtr->getValueB("trackVal");
+    CT.hueRange.spread = guiPtr->getValueI("hueSpread");
+    CT.satRange.spread = guiPtr->getValueI("satSpread");
+    CT.valRange.spread = guiPtr->getValueI("valSpread");
+   
+    
+    
+    
 	CT.track(_rgb);
 	
 	if( feetImage.getWidth() == 0 ){

@@ -23,6 +23,14 @@ public:
     colorTracker(){
         allocate(640,480);
         bUseHSV = true;
+        
+        bUseHueRange = true;
+        bUseSatRange = true;
+        bUseValRange = true;
+        
+        hueRange.spread = 100;
+        satRange.spread = 100;
+        valRange.spread = 100;
     }
     
     void allocate(int w, int h){
