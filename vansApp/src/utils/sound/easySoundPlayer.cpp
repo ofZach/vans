@@ -10,7 +10,8 @@ void easySoundPlayer::addSound(string filename, string uniqueKey, bool multiplay
 }
 
 void easySoundPlayer::play(string uniqueKey, float vol, float pitch, float pan){
-	if( snds[uniqueKey].isLoaded() == false )return;
+	
+    //if( snds[uniqueKey]. == false )return;
 
 	snds[uniqueKey].setPan(pan);	 	
 	snds[uniqueKey].play();
@@ -20,12 +21,12 @@ void easySoundPlayer::play(string uniqueKey, float vol, float pitch, float pan){
 }
 
 void easySoundPlayer::stop(string uniqueKey){
-	if( snds[uniqueKey].isLoaded() == false )return;	
+	//if( snds[uniqueKey].isLoaded() == false )return;	
 	snds[uniqueKey].stop();
 }	
 
 bool easySoundPlayer::playing(string uniqueKey){
-	if( snds[uniqueKey].isLoaded() == false )return false;	
+	//if( snds[uniqueKey].isLoaded() == false )return false;	
 	return snds[uniqueKey].getIsPlaying();
 }	
 

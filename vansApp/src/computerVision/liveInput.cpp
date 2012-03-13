@@ -126,36 +126,36 @@ void liveInput::setupMode(){
 //------------------------------------------------------------------------------------------------
 void liveInput::setupDC1394( int width, int height, liveInputMode inputMode){
 
-	w = width;
-	h = height;
-
-	inputType = LIVE_TYPE_1394;
-	this->inputMode = inputMode;
-	
-	ofSetLogLevel(OF_LOG_VERBOSE);
-	
-	dcCamera.setImageType(OF_IMAGE_COLOR);
-	
-	dcCamera.setSize(1280, 960);
-	dcCamera.set1394b(true);
-	//dcCamera.setFormat7(true, 2);
-	
-	//dcCamera.setBayerMode(DC1394_COLOR_FILTER_RGGB);
-	dcCamera.setup(0);
-		
-	w = dcCamera.getWidth();
-	h = dcCamera.getHeight();
-		
-	dcCamera.setShutterNorm(0.9);
-	dcCamera.setGainNorm(0.2);
-		
-	color.allocate(w, h);
-	grayscale.allocate(w, h);
-	
-	//640 480 - is the U and V values - not actually camera dimensions. 
-	dc1394_feature_whitebalance_set_value(dcCamera.getLibdcCamera(), 640, 480);
-	
-	setupMode();
+//	w = width;
+//	h = height;
+//
+//	inputType = LIVE_TYPE_1394;
+//	this->inputMode = inputMode;
+//	
+//	ofSetLogLevel(OF_LOG_VERBOSE);
+//	
+//	dcCamera.setImageType(OF_IMAGE_COLOR);
+//	
+//	dcCamera.setSize(1280, 960);
+//	dcCamera.set1394b(true);
+//	//dcCamera.setFormat7(true, 2);
+//	
+//	//dcCamera.setBayerMode(DC1394_COLOR_FILTER_RGGB);
+//	dcCamera.setup(0);
+//		
+//	w = dcCamera.getWidth();
+//	h = dcCamera.getHeight();
+//		
+//	dcCamera.setShutterNorm(0.9);
+//	dcCamera.setGainNorm(0.2);
+//		
+//	color.allocate(w, h);
+//	grayscale.allocate(w, h);
+//	
+//	//640 480 - is the U and V values - not actually camera dimensions. 
+//	dc1394_feature_whitebalance_set_value(dcCamera.getLibdcCamera(), 640, 480);
+//	
+//	setupMode();
 
 }
 
@@ -195,14 +195,14 @@ bool liveInput::update(bool bFlipHoriz, bool bFlipVert, bool bRecord){
 	
 	if( inputType == LIVE_TYPE_1394 ){
 
-		dcCamera.update();
-		if( dcCamera.isFrameNew() ){
-			color = dcCamera.getPixels();
-			color.mirror(bFlipVert, bFlipHoriz);
-			preview = color;
-			
-			bFrameNew = true;
-		}
+//		dcCamera.update();
+//		if( dcCamera.isFrameNew() ){
+//			color = dcCamera.getPixels();
+//			color.mirror(bFlipVert, bFlipHoriz);
+//			preview = color;
+//			
+//			bFrameNew = true;
+//		}
 		
 	}
 	else if( inputType == LIVE_TYPE_CAM ){

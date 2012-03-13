@@ -17,6 +17,8 @@ void trackerManager::setup(float w, float h){
 	statePct = 0.0;
 		
 	state = TRACKER_NONE_LONG;
+    
+    
 }	
 
 void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alpha, ofxCvGrayscaleImage & depth){
@@ -31,6 +33,11 @@ void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alph
 		rgbaPix.allocate(_rgb.getWidth(), _rgb.getHeight(), OF_IMAGE_COLOR_ALPHA);
 		depthImage.allocate(depth.getWidth(), depth.getHeight());
 	}
+    
+    
+    
+    CT.track(_rgb);
+    
 	
 	depthImage = depth;
 	
