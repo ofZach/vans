@@ -56,10 +56,10 @@
     <val_0>0.000000</val_0>
 </showTrackerDebug>
 <alphaThresh1>
-    <val_0>8.500000</val_0>
+    <val_0>9.916667</val_0>
 </alphaThresh1>
 <alphaThresh2>
-    <val_0>140.250000</val_0>
+    <val_0>164.333344</val_0>
 </alphaThresh2>
 <alphaBlur>
     <val_0>21.000000</val_0>

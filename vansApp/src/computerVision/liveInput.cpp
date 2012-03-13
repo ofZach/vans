@@ -216,7 +216,7 @@ bool liveInput::update(bool bFlipHoriz, bool bFlipVert, bool bRecord){
 			bFrameNew = true;			
 		}
 	}else if( inputType == LIVE_TYPE_KINECT ){
-		kinect.update();
+		if( !ofGetKeyPressed('p') ) kinect.update();
 
 		if( kinect.isFrameNew() ){
 			unsigned char * pix = kinect.getDepthPixels();

@@ -10,10 +10,10 @@ void vansApp::setupScreenDimensions(float width, float height){
 	screenH = height;
 				
 	availableFBOs.clear();
-	availableFBOs.reserve(4);
-	for(int i = 0; i < 4; i++){
+	availableFBOs.reserve(3);
+	for(int i = 0; i < 3; i++){
 		availableFBOs.push_back( new ofFbo());
-		availableFBOs[i]->allocate(screenW, screenH, GL_RGBA, 0);	
+		availableFBOs[i]->allocate(screenW, screenH, GL_RGBA, 4);	
 	}
 		
 	//if we want to put the person into a 'world' we can make a sceneLayout and add it to the renderer

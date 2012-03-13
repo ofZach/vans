@@ -29,7 +29,10 @@ void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alph
 		color.allocate(_rgb.getWidth(), _rgb.getHeight());
 		alpha.allocate(_alpha.getWidth(), _alpha.getHeight());
 		rgbaPix.allocate(_rgb.getWidth(), _rgb.getHeight(), OF_IMAGE_COLOR_ALPHA);
+		depthImage.allocate(depth.getWidth(), depth.getHeight());
 	}
+	
+	depthImage = depth;
 	
 	// APPLIES A REVERSE GRADIENT TO THE IMAGE TO REMOVE FLOOR
 	

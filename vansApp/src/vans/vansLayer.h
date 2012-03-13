@@ -12,6 +12,5 @@ class vansLayer : public renderLayer{
 		virtual void drawIntoShader();
 		virtual void draw();
 
-		vector <ofPoint> bgPoints;		
-		vector <ofPoint> fgPoints;
+		ofShader shader;
 };
