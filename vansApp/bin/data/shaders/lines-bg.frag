@@ -282,36 +282,67 @@ float rand(vec2 co, float scale){
 
 void main( void ){	
 
+//	vec2 st	= gl_TexCoord[0].st;
+//	vec4 color		= texture2DRect(src_tex_unit0, st);
+//	vec4 alphaMask	= texture2DRect(src_tex_unit2, st);
+//
+//	
+//    vec2 frag = gl_FragCoord.xy;
+//    vec2 frag2 = vec2(frag.x / 1024.0,  frag.y / 768.0);
+//    
+//    float dist = distance(frag2, vec2(mx, my));
+//    
+//    color.rgb = ContrastSaturationBrightness(color.rgb, 1.2, dist*0.3, 1.1 + 1.1 * dist);
+//	
+//    
+//	float val = 1.0 - RGBToHSL(color.rgb).z;
+//	float comp = doMap(val, 0.0, 1.0, 0.0, 0.2, true);
+//		
+//	float detail = 1.0;
+//	val *= 0.9;
+//	detail = 1.0;
+//	
+//	if( alphaMask.b > 0.1 ){
+//		gl_FragColor = vec4(1,1,1,1);
+//	}
+//	else{
+//		if( mod( (st.x+st.y*100.0) + (st.x - st.y),  3.0 * detail) < val * dist * 10 * detail){
+//			gl_FragColor = color;// * vec4(comp + 0.5, comp + 0.5, comp + 0.5, color.a);
+//		}else{
+//			gl_FragColor = color * 0.2 + vec4(1.0-comp, 1.0-comp, 1.0-comp, color.a);	
+//		}
+//	}
+//    
+//    gl_FragColor = (amount) * gl_FragColor + (1.0-amount) * texture2DRect(src_tex_unit0, st);
+
 	vec2 st	= gl_TexCoord[0].st;
 	vec4 color		= texture2DRect(src_tex_unit0, st);
-	vec4 alphaMask	= texture2DRect(src_tex_unit2, st);	
+	vec4 alphaMask	= texture2DRect(src_tex_unit2, st);
+
     vec2 frag = gl_FragCoord.xy;
     vec2 frag2 = vec2(frag.x / 1024.0,  frag.y / 768.0);
     
-    float dist = distance(frag2, vec2(mx, my));
-    
-    color.rgb = ContrastSaturationBrightness(color.rgb, 1.2, dist*0.3, 1.1 + 1.1 * dist);
+    float dist = distance(frag2, vec2(mx, my)) * 1.3;
 	
-    
+	vec4 colorOg = color;
+	color.rgb = ContrastSaturationBrightness(color.rgb, 0.8, 0.0, 1.1);
+	
 	float val = 1.0 - RGBToHSL(color.rgb).z;
 	float comp = doMap(val, 0.0, 1.0, 0.0, 0.2, true);
 		
 	float detail = 1.0;
 	val *= 0.9;
-	detail = 1.0;
 	
-	if( alphaMask.b > 0.1 ){
-		gl_FragColor = vec4(1,1,1,1);
+	if( alphaMask.r > 0.05 ){
+		gl_FragColor = vec4(1,1,1,0);
 	}
 	else{
-		if( mod( (st.x+st.y*100.0) + (st.x - st.y),  3.0 * detail) < val * dist * 10 * detail){
-			gl_FragColor = color;// * vec4(comp + 0.5, comp + 0.5, comp + 0.5, color.a);
+		if( mod( (-st.x+st.y*0.1) + (-st.x - st.y), 7.0 * detail) < val * dist * 9.0 * detail){
+			gl_FragColor = color * 0.8;// * vec4(comp + 0.5, comp + 0.5, comp + 0.5, color.a);
 		}else{
 			gl_FragColor = color * 0.2 + vec4(1.0-comp, 1.0-comp, 1.0-comp, color.a);	
 		}
 	}
-    
-    gl_FragColor = (amount) * gl_FragColor + (1.0-amount) * texture2DRect(src_tex_unit0, st);
 
 }
 

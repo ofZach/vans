@@ -26,7 +26,6 @@ void testApp::setup(){
 	ofSetFrameRate(30);
 	ofSetLogLevel(OF_LOG_ERROR);
 	
-	
 	if( bFirstSetup ){
 	
 		vans.setupScreenDimensions(screenW, screenH);
@@ -116,7 +115,6 @@ void testApp::setup(){
 		gui.addSlider("maxFeetSize", "maxFeetSize", 70*70, 100, 150*150, true);
 		gui.addSlider("blobTrackerDist", "trackerDist", 30, 4, 400, true);
 		
-		
 		gui.addSlider("distance", "distance", 50, 0, 255, true);
 		gui.addSlider("red", "r", 200, 0, 255, true);
 		gui.addSlider("green", "g", 60, 0, 255, true);
@@ -129,7 +127,6 @@ void testApp::setup(){
         gui.addToggle("trackVal", "trackVal", true);
         gui.addSlider("valSpread", "valSpread", 100, 0, 255, true);
 		
-        
         
 		//--- END VISION				
 										

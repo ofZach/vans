@@ -283,8 +283,9 @@ void main( void ){
 	vec4 color		= texture2DRect(src_tex_unit0, st);
 	vec4 alphaMask	= texture2DRect(src_tex_unit2, st);
 	
-	vec4 colorOg = color;
-	color.rgb = ContrastSaturationBrightness(color.rgb, 1.2, 0.0, 1.1);
+	float sat = (st.y - 200) / 200.0;
+	if( sat < 0 )sat = 0.0;
+	color.rgb = ContrastSaturationBrightness(color.rgb, 1.2, sat, 1.1);
 	
 	float val = 1.0 - RGBToHSL(color.rgb).z;
 	float comp = doMap(val, 0.0, 1.0, 0.0, 0.2, true);
@@ -298,9 +299,9 @@ void main( void ){
 	}
 	else{
 		if( mod( (st.x+st.y*0.1) + (st.x - st.y), 7.0 * detail) < val * 9.0 * detail){
-			gl_FragColor = colorOg;// * vec4(comp + 0.5, comp + 0.5, comp + 0.5, color.a);
+			gl_FragColor = color;// * vec4(comp + 0.5, comp + 0.5, comp + 0.5, color.a);
 		}else{
-			gl_FragColor = colorOg * 0.2 + vec4(1.0-comp, 1.0-comp, 1.0-comp, color.a);	
+			gl_FragColor = color * 0.2 + vec4(1.0-comp, 1.0-comp, 1.0-comp, color.a);	
 		}
 	}
 

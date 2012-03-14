@@ -99,13 +99,35 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
     
     for(int i = 0; i < feetBlobs.size(); i++){
 		int id = feetBlobs[i].id;
-
-		if( feetBlobs[i].smoothTrail.size() > 10 ){
-			trails[id].setImage(&trailImage);		
-			trails[id].setPolyLine(feetBlobs[i].smoothTrail);
-		}
 		
         if( feetBlobs[i].graphs[1].getTriggered() == true ){
+		
+			if( feetBlobs[i].trail.size() && fabs(feetBlobs[i].speed.x) > 1.4 && trails[id].drawPct < 0.1 ){
+				trails[id].setImage(&trailImage);	
+				ofPolyline line; 
+				
+				ofPoint speed = feetBlobs[i].speed;
+				speed.y *= 0.1;
+				
+				float curve = ofRandom(0.1, 0.28);
+				float len = ofRandom(130, 360);
+				float width  = ofRandom(2.5, 3.5);
+				
+				ofPoint d = (feetBlobs[i].cvBlob.centroid - feetBlobs[i].trail[0]).normalized();
+				d *= len;
+				
+				ofPoint start	= feetBlobs[i].cvBlob.centroid - d*0.6;
+				ofPoint dest	= feetBlobs[i].cvBlob.centroid + d*0.6;
+				ofPoint mid		= (start + dest) / 2.0;
+				ofPoint diff	= dest-start;
+				ofPoint norm(-diff.y, diff.x);
+
+				line.addVertex(start);
+				line.bezierTo(mid + norm * curve, mid + norm * curve, dest, 50);
+
+				trails[id].setPolyLine(line, width);
+			}		
+		
             ofPoint speed = feetBlobs[i].speed;
 			speed.y = fabs(speed.y) * -0.2;
 
@@ -155,25 +177,7 @@ void vansLayer::drawIntoShader(){
 		//then we can get ourselves composited into the scene with ofPixels curBuffPix
 	}
 		
-    
-    ofPoint midPt;
-    int count = 0;
-    vector <trackBlob> feetBlobs = trackerMan->feetTracker.blobs;
-    for(int i = 0; i < feetBlobs.size(); i++){
-        midPt += feetBlobs[i].cvBlob.centroid;
-        count++;
-    }
-    midPt /= (float)MAX(count, 1);
-    midPt.x /= 640.0;
-    midPt.y /= 480.0;
-    
-    if (count > 0){
-        presenceSmoothed = 0.93f * presenceSmoothed + 0.07f * 1.0;
-        midPtSmoothed = 0.91f * midPtSmoothed + 0.09f * midPt;
-    } else {
-        presenceSmoothed = 0.97f * presenceSmoothed + 0.03f * 0.0;
-    }
-    
+
     
 	availableFbos[1]->begin();
 			
@@ -181,7 +185,25 @@ void vansLayer::drawIntoShader(){
 		ofClear(255, 255, 255, 255); 
 	
 		if( trackerMan != NULL ){
-	
+		
+			ofPoint midPt;
+			int count = 0;
+			vector <trackBlob> feetBlobs = trackerMan->feetTracker.blobs;
+			for(int i = 0; i < feetBlobs.size(); i++){
+				midPt += feetBlobs[i].cvBlob.centroid;
+				count++;
+			}
+			midPt /= (float)MAX(count, 1);
+			midPt.x /= 640.0;
+			midPt.y /= 480.0;
+			
+			if (count > 0){
+				presenceSmoothed = 0.93f * presenceSmoothed + 0.07f * 1.0;
+				midPtSmoothed = 0.91f * midPtSmoothed + 0.09f * midPt;
+			} else {
+				presenceSmoothed = 0.97f * presenceSmoothed + 0.03f * 0.0;
+			}
+    	
 			ofPushMatrix(); 
 			ofScale(screenW / trackerMan->getWidth(), screenH / trackerMan->getHeight(), 1);
 						
@@ -226,18 +248,19 @@ void vansLayer::drawIntoShader(){
 				trackerMan->color.draw(0,0);
 			shaderFG.end();
 					
+				
+			std::map<int, textureTrail>::iterator i = trails.begin();
+			for( ; i != trails.end(); ++i ){
+				i->second.draw();
+			}
+										
 			
 			//drawCirclesBackground();			
 			ofSetColor(255);
 			for(int i = 0; i < pTests.size(); i++){
 				pTests[i].draw();
 			}
-			
-			std::map<int, textureTrail>::iterator i = trails.begin();
-			for( ; i != trails.end(); ++i ){
-				i->second.draw();
-			}
-						
+
 			ofPopMatrix();
 
 		}

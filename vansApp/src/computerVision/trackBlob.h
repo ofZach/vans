@@ -57,10 +57,10 @@ class trackBlob{
 		
 		distSincePtAdded += dist;
 		
-		if( dist >= 1.0 ){
+		if( distSincePtAdded >= 1.5 ){
 			distSincePtAdded  = 0.0;
 			trail.addVertex(cvBlob.centroid);
-			if( trail.size() > 100 ){
+			if( trail.size() > 30 ){
 				vector <ofPoint> & t = trail.getVertices();
 				t.erase(t.begin(), t.begin()+1);
 			}
@@ -70,8 +70,8 @@ class trackBlob{
 		
 		if( smoothTrail.size() > 3 ){
 			for(int i = 1; i < smoothTrail.size(); i++){
-				smoothTrail[i] *= 0.1;
-				smoothTrail[i] += smoothTrail[i-1] * 0.9;
+				smoothTrail[i] *= 0.3;
+				smoothTrail[i] += smoothTrail[i-1] * 0.7;
 			}
 		}
 	}
@@ -89,8 +89,8 @@ class trackBlob{
 		
 		ofDrawBitmapString(str, cvBlob.boundingRect.x, cvBlob.boundingRect.y);
         
-		smoothTrail.setClosed(false);
-		smoothTrail.draw();
+		trail.setClosed(false);
+		trail.draw();
 		
         //speedGraph.draw(cvBlob.centroid.x, cvBlob.centroid.y + 100);
         

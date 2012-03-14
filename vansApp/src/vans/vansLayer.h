@@ -28,6 +28,6 @@ class vansLayer : public renderLayer{
         ofPoint midPtSmoothed;
         float presenceSmoothed;
     
-
+		vector <textureTrail> trailDebug;
 		std::map <int, textureTrail> trails;
 };
