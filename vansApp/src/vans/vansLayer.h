@@ -4,6 +4,14 @@
 #include "graphicParticle.h"
 #include "textureTrail.h"
 
+
+typedef struct {
+    ofPoint pos;
+    ofColor color;
+    float alpha;
+} eventMarker;
+
+
 class vansLayer : public renderLayer{
 
 	public:
@@ -30,4 +38,10 @@ class vansLayer : public renderLayer{
     
 		vector <textureTrail> trailDebug;
 		std::map <int, textureTrail> trails;
+    
+        
+        vector < eventMarker > events;
+        void drawDebug();
+    
+    
 };

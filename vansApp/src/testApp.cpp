@@ -207,6 +207,9 @@ void testApp::draw(){
     ofSetColor(255,0,255);
     ofDrawBitmapString(ofToString(ofGetFrameRate()), 20,20);
     //tracker.CT.trackingResults.draw(mouseX, mouseY);
+    
+    
+    vans.vansMode0.drawDebug();
 }
 
 //--------------------------------------------------------------
