@@ -127,7 +127,8 @@ void testApp::setup(){
         gui.addToggle("trackVal", "trackVal", true);
         gui.addSlider("valSpread", "valSpread", 100, 0, 255, true);
 		
-        
+        gui.addToggle("bottomHalfOnly", "bottomHalfOnly", true);
+        gui.addToggle("useAlphaMask", "useAlphaMask", true);
 		//--- END VISION				
 										
 		//SETTINGS AND EVENTS

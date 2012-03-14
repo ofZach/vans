@@ -95,7 +95,7 @@ void colorTracker::track(ofxCvColorImage & colorPixels, ofxCvGrayscaleImage & al
         int wh_div_2 = w*h / 2;
         int start = 0;
         if (bJustBottomHalf == true) start = wh_div_2;
-        
+        cout << bJustBottomHalf << endl;
         for (int i = start; i < w*h; i++){
             
             if (bUseAlphaMask && alphaPixels[i] == 0){
