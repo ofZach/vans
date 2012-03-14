@@ -31,6 +31,9 @@ public:
         hueRange.spread = 100;
         satRange.spread = 100;
         valRange.spread = 100;
+        
+        bJustBottomHalf = true;
+        bUseAlphaMask = true;
     }
     
     void allocate(int w, int h){
@@ -44,7 +47,7 @@ public:
         trackedColor = _toTrack;
     }
     
-    void track(ofxCvColorImage & colorPixels); 
+    void track(ofxCvColorImage & colorPixels, ofxCvGrayscaleImage & alphaMask); 
     
     
     //--------------------------------------------
@@ -71,6 +74,11 @@ public:
     bool bUseHueRange;
     bool bUseSatRange;
     bool bUseValRange;
+    
+    
+    bool bJustBottomHalf;
+    bool bUseAlphaMask;
+    
     
 };
 

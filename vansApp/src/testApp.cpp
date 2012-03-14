@@ -203,7 +203,8 @@ void testApp::draw(){
 	if( bNeedsSetup )setup();
 
     
-    
+    ofSetColor(255,0,255);
+    ofDrawBitmapString(ofToString(ofGetFrameRate()), 20,20);
     //tracker.CT.trackingResults.draw(mouseX, mouseY);
 }
 
@@ -272,8 +273,8 @@ void testApp::mousePressed(int x, int y, int button){
 
     
     if (button == 2){
-        int xpix = ofMap(x, 0, ofGetWidth(), 0, tracker.color.getWidth());
-        int ypix = ofMap(y, 0, ofGetHeight(), 0, tracker.color.getHeight());
+        int xpix = ofMap(x, 0, 1024, 0, tracker.color.getWidth());
+        int ypix = ofMap(y, 0, 768, 0, tracker.color.getHeight());
         ofColor temp = tracker.color.getPixelsRef().getColor(xpix, ypix);
         gui.setValueI("r", temp.r);
         gui.setValueI("g", temp.g);

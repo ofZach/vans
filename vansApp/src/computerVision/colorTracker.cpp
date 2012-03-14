@@ -26,7 +26,7 @@ inline unsigned char colorDistance( unsigned char * colorPixA, unsigned char * c
 
 
 
-void colorTracker::track(ofxCvColorImage & colorPixels){
+void colorTracker::track(ofxCvColorImage & colorPixels, ofxCvGrayscaleImage & alphaMask){
     if( color.getWidth() == 0 ){
 		color.allocate( colorPixels.getWidth(), colorPixels.getHeight() );
 	}
@@ -43,11 +43,25 @@ void colorTracker::track(ofxCvColorImage & colorPixels){
      
         unsigned char * testPixels = color.getPixels();
         unsigned char * resultPixels = trackingResults.getPixels();
+        unsigned char * alphaPixels = alphaMask.getPixels();
 
         int w = color.getWidth();
         int h = color.getHeight();
         
-        for (int i = 0; i < w*h; i++){
+        int wh_div_2 = w*h / 2;
+        
+        memset(resultPixels, 0, w*h);
+        
+        int start = 0;
+        if (bJustBottomHalf == true) start = wh_div_2;
+        
+        for (int i = start; i < w*h; i++){
+            
+            if (bUseAlphaMask && alphaPixels[i] == 0){
+                continue;
+            }
+            
+            
             resultPixels[i] = colorDistance(colorTrack, (testPixels + i*3), distance);
         }
         
@@ -68,22 +82,37 @@ void colorTracker::track(ofxCvColorImage & colorPixels){
         
         unsigned char * testPixels = hsv.getPixels();
         unsigned char * resultPixels = trackingResults.getPixels();
-        
+        unsigned char * alphaPixels = alphaMask.getPixels();
+
         int w = color.getWidth();
         int h = color.getHeight();
         
-        for (int i = 0; i < w*h; i++){
+        memset(resultPixels, 0, w*h);
+        
+        int hue, sat, val;
+        float hueDist, satDist, valDist;
+        bool bOk;
+        int wh_div_2 = w*h / 2;
+        int start = 0;
+        if (bJustBottomHalf == true) start = wh_div_2;
+        
+        for (int i = start; i < w*h; i++){
             
-            bool bOk = true;
+            if (bUseAlphaMask && alphaPixels[i] == 0){
+                continue;
+            }
             
-            int hue = testPixels[i*3];
-            int sat = testPixels[i*3+1];
-            int val = testPixels[i*3+2];
+            
+            bOk = true;
+            
+            hue = testPixels[i*3];
+            sat = testPixels[i*3+1];
+            val = testPixels[i*3+2];
             
             // handle hue distance!  make it small, like an angle change. 
             
             if (bUseHueRange){
-                float hueDist= fabs(hue - hueRange.val);
+                hueDist= fabs(hue - hueRange.val);
                 if (hueDist > 128){
                     hueDist -= 255;  // the shorter way around 255. 
                 }
@@ -93,14 +122,14 @@ void colorTracker::track(ofxCvColorImage & colorPixels){
             }
             
             if (bUseSatRange){
-                float satDist= fabs(sat - hueRange.val);
+                satDist= fabs(sat - hueRange.val);
                 if (satDist > satRange.spread){
                     bOk = false;
                 }
             }
             
             if (bUseValRange){
-                float valDist= fabs(val - valRange.val);
+                valDist= fabs(val - valRange.val);
                 if (valDist > valRange.spread){
                     bOk = false;
                 }

@@ -55,7 +55,7 @@ void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alph
     CT.satRange.spread = guiPtr->getValueI("satSpread");
     CT.valRange.spread = guiPtr->getValueI("valSpread");
    
-	CT.track(_rgb);
+	CT.track(_rgb, alpha);      // use alpha or _alpha ?
 	
 	if( feetImage.getWidth() == 0 ){
 		feetImage.allocate(CT.trackingResults.getWidth(), CT.trackingResults.getHeight());
