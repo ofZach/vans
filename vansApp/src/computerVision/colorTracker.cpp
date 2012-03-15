@@ -2,6 +2,65 @@
 #include "colorTracker.h"
 
 
+#include <stdlib.h>
+#include <stdio.h>
+
+#define MIN3(x,y,z)  ((y) <= (z) ? \
+((x) <= (y) ? (x) : (y)) \
+: \
+((x) <= (z) ? (x) : (z)))
+
+#define MAX3(x,y,z)  ((y) >= (z) ? \
+((x) >= (y) ? (x) : (y)) \
+: \
+((x) >= (z) ? (x) : (z)))
+
+
+//struct rgb_color {
+//    unsigned char r, g, b;    /* Channel intensities between 0 and 255 */
+//};
+//
+//struct hsv_color {
+//    unsigned char hue;        /* Hue degree between 0 and 255 */
+//    unsigned char sat;        /* Saturation between 0 (gray) and 255 */
+//    unsigned char val;        /* Value between 0 (black) and 255 */
+//};
+
+
+unsigned char * rgb_to_hsv(unsigned char *  rgb) {
+    //struct hsv_color hsv;
+    unsigned char hsv[3];
+    
+    unsigned char rgb_min, rgb_max;
+    rgb_min = MIN3(rgb[0], rgb[1], rgb[2]);
+    rgb_max = MAX3(rgb[0], rgb[1], rgb[2]);
+    
+    hsv[2] = rgb_max;
+    if (hsv[2] == 0) {
+        hsv[0] = hsv[1] = 0;
+        return hsv;
+    }
+    
+    hsv[1] = 255*long(rgb_max - rgb_min)/hsv[2];
+    if (hsv[1] == 0) {
+        hsv[0] = 0;
+        return hsv;
+    }
+    
+    /* Compute hue */
+    if (rgb_max == rgb[0]) {
+        hsv[0] = 0 + 43*(rgb[1] - rgb[2])/(rgb_max - rgb_min);
+    } else if (rgb_max == rgb[1]) {
+        hsv[0] = 85 + 43*(rgb[2] - rgb[0])/(rgb_max - rgb_min);
+    } else /* rgb_max == rgb[2] */ {
+        hsv[0] = 171 + 43*(rgb[0] - rgb[1])/(rgb_max - rgb_min);
+    }
+    
+    return hsv;
+}
+
+
+
 
 
 inline unsigned char colorDistance( unsigned char * colorPixA, unsigned char * colorPixB, int distance){
@@ -32,7 +91,7 @@ void colorTracker::track(ofxCvColorImage & colorPixels, ofxCvGrayscaleImage & al
 	}
 	
 	color = colorPixels;
-	color.blur(11);
+	//color.blur(11);h
     
     
     if (bUseHSV == false){
@@ -69,18 +128,15 @@ void colorTracker::track(ofxCvColorImage & colorPixels, ofxCvGrayscaleImage & al
         
     } else {
         
-        hsv = color;
-        hsv.convertRgbToHsv();
+        //hsv = color;
+        //hsv.convertRgbToHsv();
         
         
         hueRange.val = trackedColor.getHue();
-        
-        
-        
         satRange.val = trackedColor.getSaturation();
         valRange.val = trackedColor.getBrightness();
         
-        unsigned char * testPixels = hsv.getPixels();
+        unsigned char * testPixels = color.getPixels();
         unsigned char * resultPixels = trackingResults.getPixels();
         unsigned char * alphaPixels = alphaMask.getPixels();
 
@@ -95,7 +151,8 @@ void colorTracker::track(ofxCvColorImage & colorPixels, ofxCvGrayscaleImage & al
         int wh_div_2 = w*h / 2;
         int start = 0;
         if (bJustBottomHalf == true) start = wh_div_2;
-        cout << bJustBottomHalf << endl;
+        
+        ofColor temp;
         for (int i = start; i < w*h; i++){
             
             if (bUseAlphaMask && alphaPixels[i] == 0){
@@ -105,9 +162,12 @@ void colorTracker::track(ofxCvColorImage & colorPixels, ofxCvGrayscaleImage & al
             
             bOk = true;
             
-            hue = testPixels[i*3];
-            sat = testPixels[i*3+1];
-            val = testPixels[i*3+2];
+            //temp.set(testPixels[i*3], testPixels[i*3+1], testPixels[i*3+2]);
+            unsigned char * hsv = rgb_to_hsv(testPixels + i*3);
+            
+            hue = hsv[0]; //temp.getHue(); // testPixels[i*3];
+            sat = hsv[1]; //temp.getSaturation(); // testPixels[i*3+1];
+            val = hsv[2]; //temp.getBrightness(); // testPixels[i*3+2];
             
             // handle hue distance!  make it small, like an angle change. 
             
