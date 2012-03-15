@@ -176,6 +176,7 @@ void colorTracker::track(ofxCvColorImage & colorPixels, ofxCvGrayscaleImage & al
                 if (hueDist > 128){
                     hueDist -= 255;  // the shorter way around 255. 
                 }
+                hueDist = fabs(hueDist);    // hue dist could be negative, fix this. 
                 if (hueDist > hueRange.spread){
                     bOk = false;
                 }
