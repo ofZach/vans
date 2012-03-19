@@ -248,9 +248,11 @@ void testApp::draw(){
     ofPushMatrix();
     ofTranslate(offsetPt);
     ofScale(scale, scale, 1);
-    //vans.draw();
+    //vans.debugDraw();
 
     ofPopMatrix();
+    
+    
     
 }
 
