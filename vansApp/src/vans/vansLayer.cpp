@@ -108,7 +108,13 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
             if( feetBlobs[i].graphs[j].getTriggered() == true ){
                 eventMarker marker;
                 marker.pos = feetBlobs[i].cvBlob.centroid;
-                marker.radius = 20;
+                
+                float timePct = feetBlobs[i].timeSeen / 0.5f;
+                if (timePct > 1) timePct = 1;
+                float speedPct = feetBlobs[i].speed.length() / 4.0;
+                if (speedPct > 1) speedPct = 1;
+                
+                marker.radius = 50 * timePct * speedPct;
                 switch (j){
                     case 0:
                         marker.color = ofColor::red;
