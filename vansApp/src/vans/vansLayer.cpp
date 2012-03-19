@@ -51,6 +51,11 @@ void ofPieSlice(float x, float y, float startAngle, float angleAmount, float rad
 //	ofEndShape(true);
 }
 		
+
+ofDirectory bass;
+ofDirectory cymbals;
+ofDirectory snareDrums;
+ofDirectory percussion;
 //------------------------------------------------------------------------------------------------------------
 void vansLayer::setup(vector <ofFbo *> fboPtr){
 		
@@ -79,7 +84,29 @@ void vansLayer::setup(vector <ofFbo *> fboPtr){
 	shaderBG.load("", "shaders/lines-bg.frag");
     
     presenceSmoothed = 0;
-
+    
+    
+    bass.listDir("sounds/Bass");
+    for (int i = 0; i < bass.size(); i++){
+         ezsnd.addSound(bass.getPath(i), bass.getName(i), true);
+    }
+    
+    cymbals.listDir("sounds/Cymbals");
+    for (int i = 0; i < cymbals.size(); i++){
+        ezsnd.addSound(cymbals.getPath(i), cymbals.getName(i), true);
+    }
+    
+    snareDrums.listDir("sounds/Snaredrums");
+    for (int i = 0; i < snareDrums.size(); i++){
+        ezsnd.addSound(snareDrums.getPath(i), snareDrums.getName(i), true);
+    }
+    
+    percussion.listDir("sounds/Percussion");
+    for (int i = 0; i < percussion.size(); i++){
+        ezsnd.addSound(percussion.getPath(i), percussion.getName(i), true);
+    }
+    
+        
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -114,18 +141,37 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
                 float speedPct = feetBlobs[i].speed.length() / 4.0;
                 if (speedPct > 1) speedPct = 1;
                 
+                float vol = 0.8 * powf(timePct * speedPct, 2);
+                
+                float pan = ofMap(marker.pos.x, 0,640, -1,1);
+                
+                string name;
+                int which;
                 marker.radius = 50 * timePct * speedPct;
                 switch (j){
                     case 0:
+                        which = (int)ofRandom(0,bass.size()) % bass.size();
+                        name = bass.getName(which);
+                        ezsnd.play(name, vol, ofRandom(0.8,1.0), pan);
                         marker.color = ofColor::red;
                         break;
                     case 1:
+                        which = (int)ofRandom(0,cymbals.size()) % cymbals.size();
+                        name = cymbals.getName(which);
+                        ezsnd.play(name, vol, ofRandom(0.8,1.0), pan);
+                        
                         marker.color = ofColor::cyan;
                         break;
                     case 2:
+                        which = (int)ofRandom(0,percussion.size()) % percussion.size();
+                        name = percussion.getName(which);
+                        ezsnd.play(name, vol, ofRandom(0.8,1.0), pan);
                         marker.color = ofColor::blue;
                         break;
                     case 3: 
+                        which = (int)ofRandom(0,snareDrums.size()) % snareDrums.size();
+                        name = snareDrums.getName(which);
+                        ezsnd.play(name, vol, ofRandom(0.8,1.0), pan);
                         marker.color = ofColor::yellow;
                         break;
                 }

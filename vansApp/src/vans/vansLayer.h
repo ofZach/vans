@@ -3,6 +3,7 @@
 #include "sceneLayout.h"
 #include "graphicParticle.h"
 #include "textureTrail.h"
+#include "easySoundPlayer.h"
 
 
 typedef struct {
@@ -43,6 +44,8 @@ class vansLayer : public renderLayer{
         
         vector < eventMarker > events;
         void drawDebug();
+    
+        easySoundPlayer ezsnd;
     
     
 };
