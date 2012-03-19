@@ -6,6 +6,15 @@
 #include "textTrail.h"
 #include "seqParticle.h"
 
+
+typedef struct {
+    ofPoint pos;
+    ofColor color;
+    float alpha;
+    float radius;
+} eventMarker;
+
+
 class vansLayer : public renderLayer{
 
 	public:
@@ -34,4 +43,9 @@ class vansLayer : public renderLayer{
         ofPoint midPtSmoothed;
         float presenceSmoothed;
     
+		vector <textureTrail> trailDebug;
+        
+        vector < eventMarker > events;
+        void drawDebug();
+        
 };

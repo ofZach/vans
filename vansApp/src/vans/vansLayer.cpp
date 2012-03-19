@@ -1,6 +1,11 @@
 #include "vansLayer.h"
 		
 		
+
+bool noAlpha(eventMarker & m){
+    return m.alpha < 0.01;
+}
+
 void ofPieSlice(float x, float y, float startAngle, float angleAmount, float radius){
 	float numPts = ofMap( fabs(angleAmount), 0, 360, 3, 32, true);
 	
@@ -76,6 +81,51 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
 	trackerMan = tracker;
     	
 	vector <trackBlob> feetBlobs = trackerMan->feetTracker.blobs;
+    
+    
+    // deal with events! 
+    for(int i = 0; i < feetBlobs.size(); i++){
+		int id = feetBlobs[i].id;
+        for (int j = 0; j < 4; j++){
+            if( feetBlobs[i].graphs[j].getTriggered() == true ){
+                eventMarker marker;
+                marker.pos = feetBlobs[i].cvBlob.centroid;
+                
+                float timePct = feetBlobs[i].timeSeen / 0.5f;
+                if (timePct > 1) timePct = 1;
+                float speedPct = feetBlobs[i].speed.length() / 4.0;
+                if (speedPct > 1) speedPct = 1;
+                
+                marker.radius = 50 * timePct * speedPct;
+                switch (j){
+                    case 0:
+                        marker.color = ofColor::red;
+                        break;
+                    case 1:
+                        marker.color = ofColor::cyan;
+                        break;
+                    case 2:
+                        marker.color = ofColor::blue;
+                        break;
+                    case 3: 
+                        marker.color = ofColor::yellow;
+                        break;
+                }
+                marker.alpha = 1;
+                events.push_back(marker);
+            }
+        }
+    }
+    
+    
+    ofRemove(events, noAlpha);
+    
+    for (int i = 0; i < events.size(); i++){
+        events[i].alpha *= 0.91;
+    }
+    
+
+    
     
     // [zach] this is accessing the blobs graph objects:
     
@@ -341,5 +391,20 @@ void vansLayer::draw(){
 	availableFbos[1]->draw(0, 0, screenW, screenH);
 			
 	 
+}
+
+//------------------------------------------------------------------------------------------------------------
+void vansLayer::drawDebug(){
+    
+    ofEnableAlphaBlending();
+    ofFill();
+    for (int i = 0; i < events.size(); i++){
+        events[i].alpha *= 0.97;
+        ofSetColor(events[i].color.r, events[i].color.g, events[i].color.b, events[i].alpha*255);
+        ofCircle(ofMap(events[i].pos.x, 0,640,0,1024), ofMap(events[i].pos.y, 0,480,0,768), events[i].radius);
+        
+    }
+    
+    
 }
 

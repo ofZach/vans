@@ -127,7 +127,8 @@ void testApp::setup(){
         gui.addToggle("trackVal", "trackVal", true);
         gui.addSlider("valSpread", "valSpread", 100, 0, 255, true);
 		
-        
+        gui.addToggle("bottomHalfOnly", "bottomHalfOnly", true);
+        gui.addToggle("useAlphaMask", "useAlphaMask", true);
 		//--- END VISION				
 										
 		//SETTINGS AND EVENTS
@@ -192,19 +193,66 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 	
+   
+    ofBackground(0,0,0);
+    
+    
+    float scale = 1;
+    ofPoint offsetPt;
+    
+    float wScreen = ofGetWidth();
+    float hScreen = ofGetHeight();
+    
+    float aspectUs = 768.0 / 1024.0;
+    float aspectThem = hScreen / wScreen;
+    
+    if (aspectUs < aspectThem){
+        scale = wScreen / 1024.0;
+        float offset = (hScreen - 768*scale)/2.0;
+        offsetPt.set(0, offset,0);
+        
+        
+    } else {
+        scale = hScreen / 768.0;
+        float offset = (wScreen - 1024*scale)/2.0;
+        offsetPt.set(offset, 0,0);
+        
+    }
+    
+    
 	if( bFirstSetup ){ 
-		vans.draw();
+		
+        ofPushMatrix();
+        ofTranslate(offsetPt);
+        ofScale(scale, scale, 1);
+        vans.draw();
+        ofPopMatrix();
 
 		ofSetColor(255, 255, 255);		
-		if( !hide )gui.draw();			
-	}
+		
+        ofPopMatrix();
+        if( !hide )gui.draw();			
+	} else {
+        
+    }
 		
 	bFirstSetup = true;
 	if( bNeedsSetup )setup();
 
     
-    
+    ofSetColor(255,0,255);
+    ofDrawBitmapString(ofToString(ofGetFrameRate()), 20,20);
     //tracker.CT.trackingResults.draw(mouseX, mouseY);
+    
+    
+    ofPushMatrix();
+    ofTranslate(offsetPt);
+    ofScale(scale, scale, 1);
+    //vans.draw();
+    vans.vansMode0.drawDebug();
+
+    ofPopMatrix();
+    
 }
 
 //--------------------------------------------------------------
@@ -272,8 +320,8 @@ void testApp::mousePressed(int x, int y, int button){
 
     
     if (button == 2){
-        int xpix = ofMap(x, 0, ofGetWidth(), 0, tracker.color.getWidth());
-        int ypix = ofMap(y, 0, ofGetHeight(), 0, tracker.color.getHeight());
+        int xpix = ofMap(x, 0, 1024, 0, tracker.color.getWidth());
+        int ypix = ofMap(y, 0, 768, 0, tracker.color.getHeight());
         ofColor temp = tracker.color.getPixelsRef().getColor(xpix, ypix);
         gui.setValueI("r", temp.r);
         gui.setValueI("g", temp.g);

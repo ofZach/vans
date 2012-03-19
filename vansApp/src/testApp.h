@@ -48,7 +48,8 @@ class testApp : public ofBaseApp{
 		float speedComp;
 										
 		int capW, capH;
-				
+    
+        
 		ofxControlPanel gui;		
 };
 	

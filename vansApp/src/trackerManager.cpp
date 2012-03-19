@@ -54,8 +54,14 @@ void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alph
     CT.hueRange.spread = guiPtr->getValueI("hueSpread");
     CT.satRange.spread = guiPtr->getValueI("satSpread");
     CT.valRange.spread = guiPtr->getValueI("valSpread");
+
+    
+    CT.bJustBottomHalf = guiPtr->getValueB("bottomHalfOnly");
+    CT.bUseAlphaMask = guiPtr->getValueB("useAlphaMask");
+    
+    
    
-	CT.track(_rgb);
+	CT.track(_rgb, alpha);      // use alpha or _alpha ?
 	
 	if( feetImage.getWidth() == 0 ){
 		feetImage.allocate(CT.trackingResults.getWidth(), CT.trackingResults.getHeight());
