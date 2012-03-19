@@ -18,6 +18,10 @@ class genericSequence : public seqManager, public baseLayer{
 		
 		}
 		
+		virtual void update(){
+			seqManager::update();
+		}		
+		
 		void setRepeatCount(int count, float _sleepTime = 0.0);
 		void setRepeatCount(int count, float _sleepTimeMin, float _sleepTimeMax);
 
@@ -36,7 +40,6 @@ class genericSequence : public seqManager, public baseLayer{
 			rate		= _rate;
 		}
 		
-		void update(float timeStep = 1.0);
 		void draw();
 		void draw(float x, float y, float w, float h);
 		

@@ -8,6 +8,7 @@ class textureTrail{
 		imgPtr = NULL;
 		drawPct = 0.0;
 		ribbonW = 3.0;
+		alpha = 255;
 	}
 	
 	void setImage( ofImage * img ){
@@ -20,9 +21,14 @@ class textureTrail{
 		drawPct = 0.1;
 		lastSeen = ofGetElapsedTimef();
 		makeMesh(drawPct);
-		drawPct = 0.0;		
+		drawPct = 0.0;	
+		alpha = 255;			
 		ribbonW = width;
 	}
+	
+	virtual bool shouldKill(){
+		return ( alpha <= 0 );
+	}	
 	
 	void makeMesh(float drawPct){
 		mesh.clear();
@@ -72,18 +78,18 @@ class textureTrail{
 	}
 	
 	void draw(){
-		float alpha = ofMap(ofGetElapsedTimef() - lastSeen, 1.6, 2.3, 255, 0);
+		alpha = ofMap(ofGetElapsedTimef() - lastSeen, 1.6, 2.5, 255, 0);
 		if( alpha < 5 ) return;
 		
 		//makeMesh(1.0);
-		cout << " drawing mesh " << drawPct << "with nPts: " << mesh.getNumVertices() << endl; 
+		//cout << " drawing mesh " << drawPct << "with nPts: " << mesh.getNumVertices() << endl; 
 		
 		if( drawPct >= 0.0 && drawPct < 2.0 ){
 			makeMesh(drawPct);
 			drawPct += 0.08;
 			
 			if( drawPct > 2.0 ){
-				drawPct = 0.0; 
+				drawPct = 2.0; 
 			}
 		}
 	
@@ -97,6 +103,7 @@ class textureTrail{
 		ofPopStyle();
 	}
 	
+	float alpha;
 	float ribbonW;
 	float drawPct;
 	ofImage * imgPtr;

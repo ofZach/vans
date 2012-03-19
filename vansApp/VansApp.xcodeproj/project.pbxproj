@@ -66,6 +66,8 @@
 		E47A57D7150FF6CB00EB31CA /* lines-bg.frag in Sources */ = {isa = PBXBuildFile; fileRef = E47A57D5150FF6CB00EB31CA /* lines-bg.frag */; };
 		E47A57D8150FF6CB00EB31CA /* lines-fg.frag in Sources */ = {isa = PBXBuildFile; fileRef = E47A57D6150FF6CB00EB31CA /* lines-fg.frag */; };
 		E47A584F150FFC4B00EB31CA /* textureTrail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47A584E150FFC4B00EB31CA /* textureTrail.cpp */; };
+		E47A5BB31511325A00EB31CA /* seqParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47A5BB21511325A00EB31CA /* seqParticle.cpp */; };
+		E47A5BF115113E6200EB31CA /* textTrail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E47A5BF015113E6200EB31CA /* textTrail.cpp */; };
 		E4AC9F9D1507BCE300656AF1 /* vansApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4AC9F931507BCE300656AF1 /* vansApp.cpp */; };
 		E4AC9FA01507BCE300656AF1 /* vansLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4AC9F991507BCE300656AF1 /* vansLayer.cpp */; };
 		E4AC9FCC1507BCFB00656AF1 /* advImageSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4AC9FB31507BCFB00656AF1 /* advImageSequence.cpp */; };
@@ -296,6 +298,10 @@
 		E47A57D6150FF6CB00EB31CA /* lines-fg.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = "lines-fg.frag"; path = "bin/data/shaders/lines-fg.frag"; sourceTree = SOURCE_ROOT; };
 		E47A584D150FFC4B00EB31CA /* textureTrail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textureTrail.h; sourceTree = "<group>"; };
 		E47A584E150FFC4B00EB31CA /* textureTrail.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textureTrail.cpp; sourceTree = "<group>"; };
+		E47A5BB11511325A00EB31CA /* seqParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = seqParticle.h; sourceTree = "<group>"; };
+		E47A5BB21511325A00EB31CA /* seqParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = seqParticle.cpp; sourceTree = "<group>"; };
+		E47A5BEF15113E6200EB31CA /* textTrail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textTrail.h; sourceTree = "<group>"; };
+		E47A5BF015113E6200EB31CA /* textTrail.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textTrail.cpp; sourceTree = "<group>"; };
 		E4AC9F931507BCE300656AF1 /* vansApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vansApp.cpp; sourceTree = "<group>"; };
 		E4AC9F941507BCE300656AF1 /* vansApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vansApp.h; sourceTree = "<group>"; };
 		E4AC9F991507BCE300656AF1 /* vansLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vansLayer.cpp; sourceTree = "<group>"; };
@@ -910,8 +916,12 @@
 				E4AC9F991507BCE300656AF1 /* vansLayer.cpp */,
 				E4AC9F9A1507BCE300656AF1 /* vansLayer.h */,
 				E47A5622150FCED400EB31CA /* vansParticle.h */,
+				E47A5BEF15113E6200EB31CA /* textTrail.h */,
+				E47A5BF015113E6200EB31CA /* textTrail.cpp */,
 				E47A584D150FFC4B00EB31CA /* textureTrail.h */,
 				E47A584E150FFC4B00EB31CA /* textureTrail.cpp */,
+				E47A5BB11511325A00EB31CA /* seqParticle.h */,
+				E47A5BB21511325A00EB31CA /* seqParticle.cpp */,
 				E47A5625150FCFB900EB31CA /* graphicParticle.h */,
 				E47A5626150FCFB900EB31CA /* graphicParticle.cpp */,
 				E40BC4761507BF9200EA7C25 /* layerUtils */,
@@ -1351,6 +1361,8 @@
 				E47A57D7150FF6CB00EB31CA /* lines-bg.frag in Sources */,
 				E47A57D8150FF6CB00EB31CA /* lines-fg.frag in Sources */,
 				E47A584F150FFC4B00EB31CA /* textureTrail.cpp in Sources */,
+				E47A5BB31511325A00EB31CA /* seqParticle.cpp in Sources */,
+				E47A5BF115113E6200EB31CA /* textTrail.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
