@@ -11,10 +11,7 @@ void ofPieSlice(float x, float y, float startAngle, float angleAmount, float rad
 	
 	float sx = cos(startAngle*DEG_TO_RAD)*radius;
 	float sy = sin(startAngle*DEG_TO_RAD)*radius;
-	
-	//float ex = cos((startAngle+angleAmount)*DEG_TO_RAD)*radius;
-	//float ey = sin((startAngle+angleAmount)*DEG_TO_RAD)*radius;
-	
+		
 	float delta = ( angleAmount*DEG_TO_RAD ) / (numPts-1.0);
 	float angle = startAngle * DEG_TO_RAD;
 	
@@ -28,28 +25,8 @@ void ofPieSlice(float x, float y, float startAngle, float angleAmount, float rad
 	}
 	ofVertex(x, y);	
 	ofEndShape(false);
-	
-//	float midX = (ex - sx) / 2;
-//	float midY = (ey - sy) / 2;
-//	
-//	float length = sqrt( midX*midX + midY*midY );
-//	
-//	ofVec2f relStart(sx, sy);
-//	ofVec2f relEnd(ex, ey);
-//	
-//	ofVec2f perpL = ( -relStart.y, relStart.x );
-//	ofVec2f perpR = ( relEnd.y, -relEnd.x );
-//	
-//	perpL *= length / radius;
-//	perpR *= length / radius;
-		
-//	ofBeginShape;
-		//ofTriangle(x, y, x + sx, y + sy, x + ex, y + ey);
-//		ofVertex(x + sx, y + sy);
-//		ofVertex(x + ex, y + ey);
-//		ofBezierVertex(perpL.x, perpL.y, perpR.x, perpR.y, ex, ey);
-//	ofEndShape(true);
 }
+
 		
 
 ofDirectory bass;
@@ -65,17 +42,21 @@ void vansLayer::setup(vector <ofFbo *> fboPtr){
 	ofDirectory dir;
 	dir.listDir("graphicsBursts");
 	
-	graphics.assign(dir.size(),ofImage());
+	graphics.assign(dir.size(),advImageSequence());
 	for(int i = 0; i < dir.size(); i++){
-		graphics[i].loadImage(dir.getPath(i));
-		graphics[i].setAnchorPercent(0.5, 0.5);
+		graphics[i].loadSeq(dir.getPath(i), "png");
 	}
 
 	dir.listDir("graphicsAccents");
-	graphicsAccents.assign(dir.size(),ofImage());
+	graphicsAccents.assign(dir.size(),advImageSequence());
 	for(int i = 0; i < dir.size(); i++){
-		graphicsAccents[i].loadImage(dir.getPath(i));
-		graphicsAccents[i].setAnchorPercent(0.5, 0.5);
+		graphicsAccents[i].loadSeq(dir.getPath(i), "png");
+	}	
+
+	dir.listDir("graphicsTextSeq");
+	graphicsSeqs.assign(dir.size(),advImageSequence());
+	for(int i = 0; i < dir.size(); i++){
+		graphicsSeqs[i].loadSeq(dir.getPath(i), "png");
 	}	
 	
 	trailImage.loadImage("graphicsTrails/swish01.png");
@@ -105,8 +86,6 @@ void vansLayer::setup(vector <ofFbo *> fboPtr){
     for (int i = 0; i < percussion.size(); i++){
         ezsnd.addSound(percussion.getPath(i), percussion.getName(i), true);
     }
-    
-        
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -119,12 +98,14 @@ void vansLayer::update(float speedComp){
 
 }
 
+static bool killParticles( seqParticle & a ){
+	return a.shouldKill();
+}
+
 //------------------------------------------------------------------------------------------------------------
 void vansLayer::checkInteraction( trackerManager * tracker ){
 	trackerMan = tracker;
-    
-    
-	
+    	
 	vector <trackBlob> feetBlobs = trackerMan->feetTracker.blobs;
     
     
@@ -196,18 +177,19 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
     for(int i = 0; i < feetBlobs.size(); i++){
 		int id = feetBlobs[i].id;
 		
+		
         if( feetBlobs[i].graphs[1].getTriggered() == true ){
 		
 			if( feetBlobs[i].trail.size() && fabs(feetBlobs[i].speed.x) > 1.4 && trails[id].drawPct < 0.1 ){
-				trails[id].setImage(&trailImage);	
 				ofPolyline line; 
 				
 				ofPoint speed = feetBlobs[i].speed;
 				speed.y *= 0.1;
 				
-				float curve = ofRandom(0.1, 0.28);
-				float len = ofRandom(130, 360);
-				float width  = ofRandom(2.5, 3.5);
+				//make a curve for the trail to follow
+				float curve		= ofRandom(0.1, 0.28);
+				float len		= ofRandom(120, 340);
+				float width		= ofRandom(1.2, 4.0);
 				
 				ofPoint d = (feetBlobs[i].cvBlob.centroid - feetBlobs[i].trail[0]).normalized();
 				d *= len;
@@ -217,30 +199,50 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
 				ofPoint mid		= (start + dest) / 2.0;
 				ofPoint diff	= dest-start;
 				ofPoint norm(-diff.y, diff.x);
+				
+				if( d.y < 0 ){
+					ofPoint tmp = dest;
+					dest = start;
+					start = tmp;
+				}
+				
+				line.addVertex(dest);
+				line.bezierTo(mid + norm * curve, mid + norm * curve, start, 50);
+				
+				if( ofRandom(0, 100) > 50 ){
+					//Ziiiiiiiiiiing
+					textTrails[id].setImageSequence(&graphicsSeqs[0], ofRandom(25, 60));	
+					textTrails[id].setPolyLine(line, width);
+				}else{
+					//graphic swish				
+					trails[id].setImage(&trailImage);	
+					trails[id].setPolyLine(line, width);				
+				}
+				
+			}else{		
+				
+				//particles bursts 
+				ofPoint speed = feetBlobs[i].speed;
+				speed.y = fabs(speed.y) * -0.2;
 
-				line.addVertex(start);
-				line.bezierTo(mid + norm * curve, mid + norm * curve, dest, 50);
+				seqParticle p;
+				seqParticle b;
 
-				trails[id].setPolyLine(line, width);
-			}		
-		
-            ofPoint speed = feetBlobs[i].speed;
-			speed.y = fabs(speed.y) * -0.2;
+				p.setup( feetBlobs[i].cvBlob.centroid, speed, ofRandom(0.3, 0.6) );
+				p.setImageSequence( &graphics[ (int)ofRandom(0, (float)graphics.size() * 0.99) ] );
 
-            graphicParticle p;
-            graphicParticle b;
-
-			p.setup( feetBlobs[i].cvBlob.centroid, speed, ofRandom(0.3, 0.6) );
-			p.setImage( &graphics[ (int)ofRandom(0, (float)graphics.size() * 0.99) ] );
-
-			b.setup( feetBlobs[i].cvBlob.centroid, speed * 0.7, ofRandom(0.3, 0.6) * 1.8 );
-			b.setImage( &graphicsAccents[ (int)ofRandom(0, (float)graphicsAccents.size() * 0.99) ] );
+				b.setup( feetBlobs[i].cvBlob.centroid, speed * 0.7, ofRandom(0.3, 0.6) * 1.8 );
+				b.setImageSequence( &graphicsAccents[ (int)ofRandom(0, (float)graphicsAccents.size() * 0.99) ] );
 
 			
-			pTests.push_back(p);
-			pTestsBack.push_back(b); 
+				pTests.push_back(p);
+				pTestsBack.push_back(b); 
+			}
         }
     }
+	
+	pTests.erase(pTests.begin(), partition(pTests.begin(), pTests.end(), killParticles));
+	pTestsBack.erase(pTestsBack.begin(), partition(pTestsBack.begin(), pTestsBack.end(), killParticles));
     
     //old
 	for(int i = 0; i < feetBlobs.size(); i++){
@@ -274,7 +276,6 @@ void vansLayer::drawIntoShader(){
 	}
 		
 
-    
 	availableFbos[1]->begin();
 			
 		//comment out if you want to do acclum 
@@ -329,7 +330,14 @@ void vansLayer::drawIntoShader(){
 			for(int i = 0; i < pTestsBack.size(); i++){
 				pTestsBack[i].draw();
 			}
-
+			
+			std::map<int, textTrail>::iterator i = textTrails.begin();
+			for( ; i != textTrails.end(); ++i ){
+				i->second.draw();
+				if( i->second.shouldKill() ){
+					textTrails.erase(i);
+				}
+			}			
 
 			//------ do foreground
 			shaderFG.begin();
@@ -343,14 +351,15 @@ void vansLayer::drawIntoShader(){
 				ofSetColor(255);
 				trackerMan->color.draw(0,0);
 			shaderFG.end();
-					
 				
-			std::map<int, textureTrail>::iterator i = trails.begin();
-			for( ; i != trails.end(); ++i ){
-				i->second.draw();
+			std::map<int, textureTrail>::iterator itr = trails.begin();
+			for( ; itr != trails.end(); ++itr ){
+				itr->second.draw();
+				if( itr->second.shouldKill() ){
+					trails.erase(itr);
+				}
 			}
 										
-			
 			//drawCirclesBackground();			
 			ofSetColor(255);
 			for(int i = 0; i < pTests.size(); i++){
@@ -379,7 +388,6 @@ void vansLayer::drawCirclesBackground(){
 	}else{
 		ofSetColor(0, 0, 0);							
 	}
-		
 	
 	ofPixelsRef ref = trackerMan->color.getPixelsRef();
 	ofPixelsRef alphaRef = trackerMan->alpha.getPixelsRef();
@@ -431,7 +439,7 @@ void vansLayer::draw(){
 }
 
 //------------------------------------------------------------------------------------------------------------
-void vansLayer::drawDebug(){
+void vansLayer::debugDraw(){
     
     ofEnableAlphaBlending();
     ofFill();

@@ -4,6 +4,8 @@
 #include "graphicParticle.h"
 #include "textureTrail.h"
 #include "easySoundPlayer.h"
+#include "textTrail.h"
+#include "seqParticle.h"
 
 
 typedef struct {
@@ -28,24 +30,26 @@ class vansLayer : public renderLayer{
 		ofShader shaderFG, shaderBG;
 		
 		ofImage trailImage;
-		vector <ofImage> graphics;
-		vector <ofImage> graphicsAccents;
-
-		vector <graphicParticle> pTests;
-		vector <graphicParticle> pTestsBack;
-    
+		
+		vector <advImageSequence> graphics;
+		vector <advImageSequence> graphicsAccents;
+		vector <advImageSequence> graphicsSeqs;
+		
+		vector <seqParticle> pTests;
+		vector <seqParticle> pTestsBack;
+		
+		std::map <int, textTrail> textTrails;
+		std::map <int, textureTrail> trails;
     
         ofPoint midPtSmoothed;
         float presenceSmoothed;
     
 		vector <textureTrail> trailDebug;
-		std::map <int, textureTrail> trails;
-    
         
         vector < eventMarker > events;
-        void drawDebug();
+
+        void debugDraw();
     
         easySoundPlayer ezsnd;
-    
-    
+
 };

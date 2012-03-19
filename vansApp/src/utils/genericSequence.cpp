@@ -51,29 +51,6 @@ void genericSequence::setRepeatCount(int count, float _sleepTimeMin, float _slee
 	bNeedsDelay		= false;	
 }
 
-void genericSequence::update(float timeStep){
-	seqManager::update();
-	
-	if( seqManager::isDone() && repeatCount >= 1){
-			
-		if( timerF == -1000.0f ){
-			if( sleepTimeMin != -1 ){
-				timerF = ofRandom(sleepTimeMin, sleepTimeMax);			
-			}else{
-				timerF = sleepTime;
-			}
-		}
-		
-		if( timerF <= 0.0 ){
-			repeatCount--;
-			setSection(currentSection.name);
-			timerF = -1000.0f;
-		}else{
-			timerF -= ofGetLastFrameTime();
-		}
-	}
-}
-
 bool genericSequence::isDone(){
 	if( seqManager::isDone() && ofGetElapsedTimef() > sleepTillTime ){
 		return true;

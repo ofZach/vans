@@ -269,7 +269,7 @@
     <val_0>67.800003</val_0>
 </trackerDist>
 <bUseHsv>
-    <val_0>1.000000</val_0>
+    <val_0>0.000000</val_0>
 </bUseHsv>
 <trackHue>
     <val_0>1.000000</val_0>
@@ -289,3 +289,9 @@
 <valSpread>
     <val_0>100.000000</val_0>
 </valSpread>
+<bottomHalfOnly>
+    <val_0>0.000000</val_0>
+</bottomHalfOnly>
+<useAlphaMask>
+    <val_0>0.000000</val_0>
+</useAlphaMask>

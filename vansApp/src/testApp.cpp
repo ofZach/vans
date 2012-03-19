@@ -249,7 +249,6 @@ void testApp::draw(){
     ofTranslate(offsetPt);
     ofScale(scale, scale, 1);
     //vans.draw();
-    vans.vansMode0.drawDebug();
 
     ofPopMatrix();
     
