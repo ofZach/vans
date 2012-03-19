@@ -394,7 +394,7 @@ void vansLayer::draw(){
 }
 
 //------------------------------------------------------------------------------------------------------------
-void vansLayer::drawDebug(){
+void vansLayer::debugDraw(){
     
     ofEnableAlphaBlending();
     ofFill();

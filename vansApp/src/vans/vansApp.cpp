@@ -85,6 +85,11 @@ void vansApp::draw(){
 		
 	if( guiPtr->getValueB("showTrackerDebug") ){
 		if( trackerMan != NULL ){
+			for(int k = 0; k < scenes.size(); k++){
+				if( k == currentScene ){
+					scenes[k]->debugDraw();			
+				}
+			}			
 			trackerMan->debugDraw();
 		}
 	}

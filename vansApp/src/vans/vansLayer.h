@@ -46,6 +46,6 @@ class vansLayer : public renderLayer{
 		vector <textureTrail> trailDebug;
         
         vector < eventMarker > events;
-        void drawDebug();
+        void debugDraw();
         
 };
