@@ -193,15 +193,12 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 	
-    /*
-     Determine the aspect ratio of both (height divided by width, say, so tall, skinny rectangles have an aspect ratio > 1).
-     
-     If your rectangle's aspect ratio is greater than that of your image, then scale the image uniformly based on the widths (rectangle width / image width).
-     
-     If your rectangle's aspect ratio is less than that of your image, then scale the image uniformly based on the heights (rectangle height / image height).
-     */
-    
+   
     ofBackground(0,0,0);
+    
+    
+    float scale = 1;
+    ofPoint offsetPt;
     
     float wScreen = ofGetWidth();
     float hScreen = ofGetHeight();
@@ -210,25 +207,34 @@ void testApp::draw(){
     float aspectThem = hScreen / wScreen;
     
     if (aspectUs < aspectThem){
-        float scale = wScreen / 1024.0;
+        scale = wScreen / 1024.0;
         float offset = (hScreen - 768*scale)/2.0;
-        glTranslatef(0, offset,0);
-        glScalef(scale, scale, 1);
+        offsetPt.set(0, offset,0);
+        
         
     } else {
-        float scale = hScreen / 768.0;
+        scale = hScreen / 768.0;
         float offset = (wScreen - 1024*scale)/2.0;
-        glTranslatef(offset, 0,0);
-        glScalef(scale, scale, 1);
+        offsetPt.set(offset, 0,0);
+        
     }
     
     
 	if( bFirstSetup ){ 
-		vans.draw();
+		
+        ofPushMatrix();
+        ofTranslate(offsetPt);
+        ofScale(scale, scale, 1);
+        vans.draw();
+        ofPopMatrix();
 
 		ofSetColor(255, 255, 255);		
-		if( !hide )gui.draw();			
-	}
+		
+        ofPopMatrix();
+        if( !hide )gui.draw();			
+	} else {
+        
+    }
 		
 	bFirstSetup = true;
 	if( bNeedsSetup )setup();
@@ -239,7 +245,14 @@ void testApp::draw(){
     //tracker.CT.trackingResults.draw(mouseX, mouseY);
     
     
+    ofPushMatrix();
+    ofTranslate(offsetPt);
+    ofScale(scale, scale, 1);
+    //vans.draw();
     vans.vansMode0.drawDebug();
+
+    ofPopMatrix();
+    
 }
 
 //--------------------------------------------------------------

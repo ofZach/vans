@@ -108,6 +108,7 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
             if( feetBlobs[i].graphs[j].getTriggered() == true ){
                 eventMarker marker;
                 marker.pos = feetBlobs[i].cvBlob.centroid;
+                marker.radius = 20;
                 switch (j){
                     case 0:
                         marker.color = ofColor::red;
@@ -385,7 +386,7 @@ void vansLayer::drawDebug(){
     for (int i = 0; i < events.size(); i++){
         events[i].alpha *= 0.97;
         ofSetColor(events[i].color.r, events[i].color.g, events[i].color.b, events[i].alpha*255);
-        ofCircle(ofMap(events[i].pos.x, 0,640,0,1024), ofMap(events[i].pos.y, 0,480,0,768), 50);
+        ofCircle(ofMap(events[i].pos.x, 0,640,0,1024), ofMap(events[i].pos.y, 0,480,0,768), events[i].radius);
         
     }
     

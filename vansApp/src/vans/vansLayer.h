@@ -9,6 +9,7 @@ typedef struct {
     ofPoint pos;
     ofColor color;
     float alpha;
+    float radius;
 } eventMarker;
 
 
