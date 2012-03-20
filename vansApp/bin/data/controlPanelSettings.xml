@@ -200,10 +200,10 @@
     <val_0>0.638889</val_0>
 </speedSmoothPct>
 <minSmoothedSpeed>
-    <val_0>20.000000</val_0>
+    <val_0>6.555555</val_0>
 </minSmoothedSpeed>
 <maxSmoothedSpeed>
-    <val_0>79.166672</val_0>
+    <val_0>20.000002</val_0>
 </maxSmoothedSpeed>
 <sceneTimeSecs>
     <val_0>52.000000</val_0>
@@ -248,7 +248,7 @@
     <val_0>133.166672</val_0>
 </distance>
 <r>
-    <val_0>158.000000</val_0>
+    <val_0>90.666672</val_0>
 </r>
 <g>
     <val_0>11.000000</val_0>
@@ -269,7 +269,7 @@
     <val_0>67.800003</val_0>
 </trackerDist>
 <bUseHsv>
-    <val_0>1.000000</val_0>
+    <val_0>0.000000</val_0>
 </bUseHsv>
 <trackHue>
     <val_0>1.000000</val_0>
@@ -295,3 +295,12 @@
 <useAlphaMask>
     <val_0>1.000000</val_0>
 </useAlphaMask>
+<maxDistFootMove>
+    <val_0>82.500000</val_0>
+</maxDistFootMove>
+<scaleComp>
+    <val_0>1.044444</val_0>
+</scaleComp>
+<crazyModeScaleAdd>
+    <val_0>1.200000</val_0>
+</crazyModeScaleAdd>

@@ -17,6 +17,8 @@ class trackBlob{
         graphs[1].setup("x change", 0).setBidirectional(true);
         graphs[2].setup("y change", 0).setBidirectional(true);
         graphs[3].setup("z change", 0).setBidirectional(true);
+		
+		pctDist = 0.0;
 	}
 	
 	void cloneFromBlob(ofxCvBlob & b){
@@ -57,13 +59,10 @@ class trackBlob{
 		
 		distSincePtAdded += dist;
 		
-		if( distSincePtAdded >= 1.5 ){
-			distSincePtAdded  = 0.0;
-			trail.addVertex(cvBlob.centroid);
-			if( trail.size() > 30 ){
-				vector <ofPoint> & t = trail.getVertices();
-				t.erase(t.begin(), t.begin()+1);
-			}
+		trail.addVertex(cvBlob.centroid);
+		if( trail.size() > 6 ){
+			vector <ofPoint> & t = trail.getVertices();
+			t.erase(t.begin(), t.begin()+1);
 		}
 		
 		smoothTrail = trail;
@@ -75,6 +74,23 @@ class trackBlob{
 			}
 		}
 	}
+	
+	float getRoughDistPct(float maxLen){
+		if( smoothTrail.size() ){
+			float len =  ( cvBlob.centroid - smoothTrail[0] ).length();
+//			cout << " cvBlob.centroid is " << cvBlob.centroid << endl;
+//			cout << " smoothTrail[0] is " << smoothTrail[0] << endl;
+//			cout << "len is " << len << endl; 
+//			cout << "maxLen is " << maxLen << endl; 
+
+			pctDist = len/maxLen;
+			cout << "pctDist is " << pctDist << endl; 
+
+			pctDist = ofClamp(pctDist, 0, 1);
+			return pctDist;
+		}
+		return 0;
+	}	
 	
 	void debugDraw(){
 		ofSetColor(50, 90, 250);
@@ -89,8 +105,11 @@ class trackBlob{
 		
 		ofDrawBitmapString(str, cvBlob.boundingRect.x, cvBlob.boundingRect.y);
         
-		trail.setClosed(false);
-		trail.draw();
+//		trail.setClosed(false);
+//		trail.draw();
+
+		smoothTrail.setClosed(false);
+		smoothTrail.draw();
 		
         //speedGraph.draw(cvBlob.centroid.x, cvBlob.centroid.y + 100);
         
@@ -111,7 +130,7 @@ class trackBlob{
     
 	ofPolyline smoothTrail;
 	ofPolyline trail;
-	
+	float pctDist;
 	ofxCvBlob cvBlob;
 	
     float prevSize;

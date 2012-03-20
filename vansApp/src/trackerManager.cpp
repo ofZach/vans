@@ -69,8 +69,8 @@ void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alph
 		
 	cvAnd(CT.trackingResults.getCvImage(), alpha.getCvImage(), feetImage.getCvImage());
 	feetImage.flagImageChanged();
+	feetImage.blur(5);
 	feetFinder.findContours(feetImage, guiPtr->getValueI("minFeetSize"), guiPtr->getValueI("maxFeetSize"), 10, false, false);
-	
 	feetTracker.track(feetFinder, depthImage, guiPtr->getValueI("trackerDist"));
 	
 	//BLIT THAT SHIT
@@ -190,6 +190,8 @@ void trackerManager::draw(float x, float y, float w, float h){
 	ofRect(x+2, y+2, 15, 15);
 	
 	feetTracker.drawGraphs(x,y+h*0.5,w,h*0.5);
+	
+	ofDrawBitmapString("smoothedSpeed is " + ofToString(normalizedSmoothedSpeed), x + 4, y + 30);
 	
 	ofPopStyle();	
 }

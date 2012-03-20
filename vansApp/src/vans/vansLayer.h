@@ -25,7 +25,6 @@ class vansLayer : public renderLayer{
 		virtual void checkInteraction( trackerManager * tracker );
 		virtual void drawIntoShader();
 		virtual void draw();
-		void drawCirclesBackground();
 
 		ofShader shaderFG, shaderBG;
 		

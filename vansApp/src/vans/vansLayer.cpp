@@ -6,29 +6,6 @@ bool noAlpha(eventMarker & m){
     return m.alpha < 0.01;
 }
 
-void ofPieSlice(float x, float y, float startAngle, float angleAmount, float radius){
-	float numPts = ofMap( fabs(angleAmount), 0, 360, 3, 32, true);
-	
-	float sx = cos(startAngle*DEG_TO_RAD)*radius;
-	float sy = sin(startAngle*DEG_TO_RAD)*radius;
-		
-	float delta = ( angleAmount*DEG_TO_RAD ) / (numPts-1.0);
-	float angle = startAngle * DEG_TO_RAD;
-	
-	ofBeginShape();
-	ofVertex(x, y);
-	for(int k = 0; k < numPts; k++){
-		float sx = cos(angle)*radius;
-		float sy = sin(angle)*radius;
-		ofVertex(x+sx, y+sy);	
-		angle += delta;		
-	}
-	ofVertex(x, y);	
-	ofEndShape(false);
-}
-
-		
-
 ofDirectory bass;
 ofDirectory cymbals;
 ofDirectory snareDrums;
@@ -108,10 +85,17 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
     	
 	vector <trackBlob> feetBlobs = trackerMan->feetTracker.blobs;
     
-    
+	float maxLen    = guiPtr->getValueF("maxDistFootMove");
+	float scaleComp = guiPtr->getValueF("scaleComp");
+	float crazyModeScaleAmnt = guiPtr->getValueF("crazyModeScaleAdd", false);
+
+	float bonusScale = scaleComp * ofMap(tracker->normalizedSmoothedSpeed, 0.6, 1.0, 1.0, crazyModeScaleAmnt) * 1.2;
+	
     // deal with events! 
     for(int i = 0; i < feetBlobs.size(); i++){
-		int id = feetBlobs[i].id;
+		int id		= feetBlobs[i].id;
+		float lenPct = feetBlobs[i].getRoughDistPct(maxLen);
+		
         for (int j = 0; j < 4; j++){
             if( feetBlobs[i].graphs[j].getTriggered() == true ){
                 eventMarker marker;
@@ -119,11 +103,18 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
                 
                 float timePct = feetBlobs[i].timeSeen / 0.5f;
                 if (timePct > 1) timePct = 1;
-                float speedPct = feetBlobs[i].speed.length() / 4.0;
-                if (speedPct > 1) speedPct = 1;
-                
-                float speedPct2 = feetBlobs[i].speed.length() / 8.0;
-                if (speedPct2 > 1) speedPct2 = 1;
+				
+				float speedPct = ofClamp(lenPct*2.0, 0, 1);
+				float speedPct2 = lenPct;//ofClamp((lenPct-0.5)* 2.0, 0, 1);
+				
+				cout << " speedPct is " << speedPct << endl; 
+				cout << " speedPct2 is " << speedPct2 << endl; 
+				
+//                float speedPct = feetBlobs[i].speed.length() / 4.0;
+//                if (speedPct > 1) speedPct = 1;
+//                
+//                float speedPct2 = feetBlobs[i].speed.length() / 8.0;
+//                if (speedPct2 > 1) speedPct2 = 1;
                 
                 
                 float vol = 0.8 * powf(timePct * speedPct, 2);
@@ -135,7 +126,6 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
                 marker.radius = 50 * timePct * speedPct;
                 switch (j){
                     case 0:
-                        
                         
                         which = (int)ofRandom(0,bass.size()) % bass.size();
                         name = bass.getName(which);
@@ -151,18 +141,27 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
                             seqParticle p;
                             seqParticle b;
                             
-                            p.setup( feetBlobs[i].cvBlob.centroid, speed, ofRandom(0.3, 0.6) );
+                            p.setup( feetBlobs[i].cvBlob.centroid, speed, ofRandom(0.3, 0.6)* speedPct2 * bonusScale , ofRandom(0.6, 1.0) );
                             p.setImageSequence( &graphics[ (int)ofRandom(0, (float)graphics.size() * 0.99) ] );
                             
-                            b.setup( feetBlobs[i].cvBlob.centroid, speed * 0.7, ofRandom(0.3, 0.6) * 1.8 * speedPct2 );
+                            b.setup( feetBlobs[i].cvBlob.centroid, speed * 0.7, ofRandom(0.3, 0.6) * 1.8 * speedPct2 * bonusScale );
                             b.setImageSequence( &graphicsAccents[ (int)ofRandom(0, (float)graphicsAccents.size() * 0.99) ] );
-                            
                             
                             pTests.push_back(p);
                             pTestsBack.push_back(b); 
                         }
                         
-                        
+						//make crazy bg blobs 
+                        if( tracker->normalizedSmoothedSpeed >= 0.9 ){
+							if( ofRandom(0, 1000) > 900 ){
+								for(int i = 0; i < 4; i++){
+									seqParticle b;
+									b.setup( ofPoint(ofRandom(100, screenW-100), ofRandom(100, screenH-400)),  ofPoint( ofRandom(-1,1),  ofRandom(-1,1) ) * 2.0 , ofRandom(0.3, 0.6) * 1.3 * 1.7 );
+									b.setImageSequence( &graphicsAccents[ graphicsAccents.size() -1 ] );
+									pTestsBack.push_back(b); 
+								}
+							}
+						}
                         
                         
                         break;
@@ -188,12 +187,11 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
                             seqParticle p;
                             seqParticle b;
                             
-                            p.setup( feetBlobs[i].cvBlob.centroid, speed, ofRandom(0.3, 0.6) );
+                            p.setup( feetBlobs[i].cvBlob.centroid, speed, ofRandom(0.3, 0.6) * speedPct2  * bonusScale, ofRandom(0.5,  1.0));
                             p.setImageSequence( &graphics[ (int)ofRandom(0, (float)graphics.size() * 0.99) ] );
                             
-                            b.setup( feetBlobs[i].cvBlob.centroid, speed * 0.7, ofRandom(0.3, 0.6) * 1.8  * speedPct2);
+                            b.setup( feetBlobs[i].cvBlob.centroid, speed * 0.7, ofRandom(0.3, 0.6) * 1.8  * speedPct2 * bonusScale);
                             b.setImageSequence( &graphicsAccents[ (int)ofRandom(0, (float)graphicsAccents.size() * 0.99) ] );
-                            
                             
                             pTests.push_back(p);
                             pTestsBack.push_back(b); 
@@ -229,6 +227,7 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
     for(int i = 0; i < feetBlobs.size(); i++){
 		int id = feetBlobs[i].id;
 		
+		float lenPct= feetBlobs[i].getRoughDistPct(maxLen);
 		
         if( feetBlobs[i].graphs[1].getTriggered() == true ){
 		
@@ -240,10 +239,11 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
 				
 				//make a curve for the trail to follow
 				float curve		= ofRandom(0.1, 0.28);
-				float len		= ofRandom(120, 340);
-				float width		= ofRandom(1.2, 4.0);
+				float len		= ofRandom(120, 340) * (0.4 + lenPct);
+				float width		= ofRandom(1.2, 2.5 + lenPct * 2.8);
 				
-				ofPoint d = (feetBlobs[i].cvBlob.centroid - feetBlobs[i].trail[0]).normalized();
+				ofPoint b = feetBlobs[i].smoothTrail[0];
+				ofPoint d = (feetBlobs[i].cvBlob.centroid - b).normalized();
 				d *= len;
 				
 				ofPoint start	= feetBlobs[i].cvBlob.centroid - d*0.6;
@@ -263,12 +263,12 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
 				
 				if( ofRandom(0, 100) > 50 ){
 					//Ziiiiiiiiiiing
-					textTrails[id].setImageSequence(&graphicsSeqs[0], ofRandom(25, 60));	
+					textTrails[id].setImageSequence(&graphicsSeqs[0], ofRandom(28, 65) * ( 0.6 + lenPct ) * bonusScale  );	
 					textTrails[id].setPolyLine(line, width);
 				}else{
 					//graphic swish				
 					trails[id].setImage(&trailImage);	
-					trails[id].setPolyLine(line, width);				
+					trails[id].setPolyLine(line, width * bonusScale);				
 				}
 				
 			}else{		
@@ -368,14 +368,22 @@ void vansLayer::drawIntoShader(){
 				pTestsBack[i].draw();
 			}
 			
+			std::map<int, textureTrail>::iterator itr = trails.begin();
+			for( ; itr != trails.end(); ++itr ){
+				itr->second.draw();
+				if( itr->second.shouldKill() ){
+					trails.erase(itr);
+				}
+			}	
+							
 			std::map<int, textTrail>::iterator i = textTrails.begin();
 			for( ; i != textTrails.end(); ++i ){
 				i->second.draw();
 				if( i->second.shouldKill() ){
 					textTrails.erase(i);
 				}
-			}			
-
+			}	
+			
 			//------ do foreground
 			shaderFG.begin();
 				shaderFG.setUniform1i("src_tex_unit0", 0);
@@ -389,13 +397,7 @@ void vansLayer::drawIntoShader(){
 				trackerMan->color.draw(0,0);
 			shaderFG.end();
 				
-			std::map<int, textureTrail>::iterator itr = trails.begin();
-			for( ; itr != trails.end(); ++itr ){
-				itr->second.draw();
-				if( itr->second.shouldKill() ){
-					trails.erase(itr);
-				}
-			}
+
 										
 			//drawCirclesBackground();			
 			ofSetColor(255);
@@ -411,60 +413,6 @@ void vansLayer::drawIntoShader(){
 	
 }
 
-void vansLayer::drawCirclesBackground(){
-
-	bool bRandomPieStart = false;
-	bool bInvert = ofGetKeyPressed('i');
-	float spacing = 5.0;
-	float pixelSize = 3.0;
-	
-	float defAngle = -90;
-	
-	if( bInvert ){
-		ofSetColor(255, 255, 255);
-	}else{
-		ofSetColor(0, 0, 0);							
-	}
-	
-	ofPixelsRef ref = trackerMan->color.getPixelsRef();
-	ofPixelsRef alphaRef = trackerMan->alpha.getPixelsRef();
-	
-	int c = 0;
-	int index =0;
-	for(int y = 0; y < ref.getHeight(); y+= spacing ){
-		c++;
-		float offset = 0;
-		if( c % 2 == 0 ) offset = spacing/2.0;
-		
-		for(int x = 0; x < ref.getWidth(); x+= spacing ){					
-			float maskScale = 1.0;
-			float scale = 1.0;
-			
-			int alphaIndex = y * 640 + x; 
-			
-			if( alphaRef[alphaIndex] > 10 )continue;
-		
-			ofColor col = ref.getColor(x + offset, y);
-			float val = powf(col.getLightness()/255.0, 1.5);
-			
-			ofSetColor( col * 0.4 );
-			
-//					float angleAmount = ofMap(val, 1.0, 0.0, 0.0, 360.0, true);
-//					if( bInvert ){
-//						angleAmount = 360-angleAmount;
-//					}
-//					
-//				
-//					if( angleAmount > 0.0 ){
-				if( bRandomPieStart ){
-					defAngle = ofRandom(-90, 270);
-				}
-				ofCircle(offset + x, y, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/8, pixelSize * 1.2, true));
-				//ofPieSlice(offset + x, y, defAngle, angleAmount, maskScale * scale * ofMap(val, 1.0, 0.0, pixelSize/4, pixelSize/1.5, true));
-//					}
-		}
-	}
-}
 
 //------------------------------------------------------------------------------------------------------------
 void vansLayer::draw(){

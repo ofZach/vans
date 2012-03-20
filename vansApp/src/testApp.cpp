@@ -65,6 +65,9 @@ void testApp::setup(){
 		appFrameRate	= ofGetFrameRate();
 			
 		gui.addSlider("volume", "volume", 0.0, 0.0, 1.0f, false);
+		gui.addSlider("maxDistFootMove", "maxDistFootMove", 100, 10, 300, true);
+		gui.addSlider("scaleComp", "scaleComp", 1.2, 0.4, 2.4, false);
+		gui.addSlider("crazyModeScaleAdd", "crazyModeScaleAdd", 1.2, 1.0, 2.0, false);
 		
 		//load from xml!
 		gui.loadSettings("controlPanelSettings.xml");
@@ -240,9 +243,11 @@ void testApp::draw(){
 	if( bNeedsSetup )setup();
 
     
-    ofSetColor(255,0,255);
-    ofDrawBitmapString(ofToString(ofGetFrameRate()), 20,20);
-    //tracker.CT.trackingResults.draw(mouseX, mouseY);
+	if( ofGetKeyPressed('p') ){
+		ofSetColor(255,0,255);
+		ofDrawBitmapString(ofToString(ofGetFrameRate()), 20,20);
+	}
+	//tracker.CT.trackingResults.draw(mouseX, mouseY);
     
     
     ofPushMatrix();

@@ -84,12 +84,13 @@ class textureTrail{
 		//makeMesh(1.0);
 		//cout << " drawing mesh " << drawPct << "with nPts: " << mesh.getNumVertices() << endl; 
 		
-		if( drawPct >= 0.0 && drawPct < 2.0 ){
+		if( drawPct >= 0.0 && drawPct <= 2.0 ){
 			makeMesh(drawPct);
 			drawPct += 0.08;
 			
 			if( drawPct > 2.0 ){
 				drawPct = 2.0; 
+				alpha *= 0.6;
 			}
 		}
 	

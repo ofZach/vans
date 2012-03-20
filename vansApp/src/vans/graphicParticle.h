@@ -5,7 +5,7 @@
 class graphicParticle : public vansParticle{
 	public:
 		
-		virtual void setup(ofPoint p, ofPoint v, float s){
+		virtual void setup(ofPoint p, ofPoint v, float s, float _aniSpeed = 1.0){
 			unique			= ofRandom(0, 100000);
 			drag			= ofRandom(0.97, 0.988);
 			pos				= p;
@@ -14,6 +14,7 @@ class graphicParticle : public vansParticle{
 			scale			= 0.0;
 			pctScale		= 0.0;
 			pctTargetScale	= 1.0;
+			aniSpeed		= _aniSpeed;
 			reached			= false;			
 		}
 		
@@ -26,9 +27,9 @@ class graphicParticle : public vansParticle{
 			pos += vel;
 			
 			if( !reached ){
-				pctScale = ofLerp(pctScale, pctTargetScale, 0.24);
+				pctScale = ofLerp(pctScale, pctTargetScale, 0.24 * aniSpeed);
 			}else{
-				pctScale = ofLerp(pctScale, pctTargetScale, 0.1);
+				pctScale = ofLerp(pctScale, pctTargetScale, 0.1 * aniSpeed);
 			}
 			
 			if( fabs( scale - targetScale ) < 0.03 ){
@@ -53,6 +54,7 @@ class graphicParticle : public vansParticle{
 		bool reached;
 		float targetScale;
 		ofImage * img;
+		float aniSpeed;
 		
 //		ofPoint pos;
 //		ofPoint vel;

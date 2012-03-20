@@ -91,8 +91,7 @@ void colorTracker::track(ofxCvColorImage & colorPixels, ofxCvGrayscaleImage & al
 	}
 	
 	color = colorPixels;
-	//color.blur(11);h
-    
+	//color.blur(11);
     
     if (bUseHSV == false){
         unsigned char colorTrack[3];
