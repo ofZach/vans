@@ -122,6 +122,10 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
                 float speedPct = feetBlobs[i].speed.length() / 4.0;
                 if (speedPct > 1) speedPct = 1;
                 
+                float speedPct2 = feetBlobs[i].speed.length() / 8.0;
+                if (speedPct2 > 1) speedPct2 = 1;
+                
+                
                 float vol = 0.8 * powf(timePct * speedPct, 2);
                 
                 float pan = ofMap(marker.pos.x, 0,640, -1,1);
@@ -131,10 +135,36 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
                 marker.radius = 50 * timePct * speedPct;
                 switch (j){
                     case 0:
+                        
+                        
                         which = (int)ofRandom(0,bass.size()) % bass.size();
                         name = bass.getName(which);
                         ezsnd.play(name, vol, ofRandom(0.8,1.0), pan);
                         marker.color = ofColor::red;
+                        
+                        if (speedPct > 0.95){
+                            //particles bursts 
+                            ofPoint speed = feetBlobs[i].speed;
+                            speed.x *= -1;
+                            speed.y = fabs(speed.y) * -0.2;
+                            
+                            seqParticle p;
+                            seqParticle b;
+                            
+                            p.setup( feetBlobs[i].cvBlob.centroid, speed, ofRandom(0.3, 0.6) );
+                            p.setImageSequence( &graphics[ (int)ofRandom(0, (float)graphics.size() * 0.99) ] );
+                            
+                            b.setup( feetBlobs[i].cvBlob.centroid, speed * 0.7, ofRandom(0.3, 0.6) * 1.8 * speedPct2 );
+                            b.setImageSequence( &graphicsAccents[ (int)ofRandom(0, (float)graphicsAccents.size() * 0.99) ] );
+                            
+                            
+                            pTests.push_back(p);
+                            pTestsBack.push_back(b); 
+                        }
+                        
+                        
+                        
+                        
                         break;
                     case 1:
                         which = (int)ofRandom(0,cymbals.size()) % cymbals.size();
@@ -148,6 +178,28 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
                         name = percussion.getName(which);
                         ezsnd.play(name, vol, ofRandom(0.8,1.0), pan);
                         marker.color = ofColor::blue;
+                        
+                        if (speedPct > 0.95){
+                            //particles bursts 
+                            ofPoint speed = feetBlobs[i].speed;
+                            speed.x *= -1;
+                            speed.y = fabs(speed.y) * -0.2;
+                            
+                            seqParticle p;
+                            seqParticle b;
+                            
+                            p.setup( feetBlobs[i].cvBlob.centroid, speed, ofRandom(0.3, 0.6) );
+                            p.setImageSequence( &graphics[ (int)ofRandom(0, (float)graphics.size() * 0.99) ] );
+                            
+                            b.setup( feetBlobs[i].cvBlob.centroid, speed * 0.7, ofRandom(0.3, 0.6) * 1.8  * speedPct2);
+                            b.setImageSequence( &graphicsAccents[ (int)ofRandom(0, (float)graphicsAccents.size() * 0.99) ] );
+                            
+                            
+                            pTests.push_back(p);
+                            pTestsBack.push_back(b); 
+                        }
+                        
+                        
                         break;
                     case 3: 
                         which = (int)ofRandom(0,snareDrums.size()) % snareDrums.size();
@@ -221,22 +273,7 @@ void vansLayer::checkInteraction( trackerManager * tracker ){
 				
 			}else{		
 				
-				//particles bursts 
-				ofPoint speed = feetBlobs[i].speed;
-				speed.y = fabs(speed.y) * -0.2;
-
-				seqParticle p;
-				seqParticle b;
-
-				p.setup( feetBlobs[i].cvBlob.centroid, speed, ofRandom(0.3, 0.6) );
-				p.setImageSequence( &graphics[ (int)ofRandom(0, (float)graphics.size() * 0.99) ] );
-
-				b.setup( feetBlobs[i].cvBlob.centroid, speed * 0.7, ofRandom(0.3, 0.6) * 1.8 );
-				b.setImageSequence( &graphicsAccents[ (int)ofRandom(0, (float)graphicsAccents.size() * 0.99) ] );
-
-			
-				pTests.push_back(p);
-				pTestsBack.push_back(b); 
+				
 			}
         }
     }

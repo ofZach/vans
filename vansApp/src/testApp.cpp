@@ -15,7 +15,7 @@ bool bFirstSetup = false;
 bool bNeedsSetup = true;
 bool bRecordFrames = false;
 
-bool bLaptop = true;
+bool bLaptop = false;
      
 //--------------------------------------------------------------
 void testApp::setup(){	
@@ -318,11 +318,42 @@ void testApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
 
+    
+    float scale = 1;
+    ofPoint offsetPt;
+    
+    float wScreen = ofGetWidth();
+    float hScreen = ofGetHeight();
+    
+    float aspectUs = 768.0 / 1024.0;
+    float aspectThem = hScreen / wScreen;
+    
+    if (aspectUs < aspectThem){
+        scale = wScreen / 1024.0;
+        float offset = (hScreen - 768*scale)/2.0;
+        offsetPt.set(0, offset,0);
+        
+        
+    } else {
+        scale = hScreen / 768.0;
+        float offset = (wScreen - 1024*scale)/2.0;
+        offsetPt.set(offset, 0,0);
+        
+    }
 
     
+/*
+ ofTranslate(offsetPt);
+ ofScale(scale, scale, 1);
+ */
+    
     if (button == 2){
-        int xpix = ofMap(x, 0, 1024, 0, tracker.color.getWidth());
-        int ypix = ofMap(y, 0, 768, 0, tracker.color.getHeight());
+        ofPoint xp;
+        xp.set(x,y);
+        xp -= offsetPt;
+        //xp *= scale;
+        int xpix = ofMap(xp.x, 0, 1024*scale, 0, tracker.color.getWidth());
+        int ypix = ofMap(xp.y, 0, 768*scale, 0, tracker.color.getHeight());
         ofColor temp = tracker.color.getPixelsRef().getColor(xpix, ypix);
         gui.setValueI("r", temp.r);
         gui.setValueI("g", temp.g);

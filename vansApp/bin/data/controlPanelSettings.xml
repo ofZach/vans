@@ -248,13 +248,13 @@
     <val_0>133.166672</val_0>
 </distance>
 <r>
-    <val_0>159.000000</val_0>
+    <val_0>158.000000</val_0>
 </r>
 <g>
-    <val_0>1.000000</val_0>
+    <val_0>11.000000</val_0>
 </g>
 <b>
-    <val_0>21.000000</val_0>
+    <val_0>60.000000</val_0>
 </b>
 <showMasked>
     <val_0>1.000000</val_0>
@@ -269,29 +269,29 @@
     <val_0>67.800003</val_0>
 </trackerDist>
 <bUseHsv>
-    <val_0>0.000000</val_0>
+    <val_0>1.000000</val_0>
 </bUseHsv>
 <trackHue>
     <val_0>1.000000</val_0>
 </trackHue>
 <hueSpread>
-    <val_0>100.000000</val_0>
+    <val_0>42.500000</val_0>
 </hueSpread>
 <trackSat>
     <val_0>1.000000</val_0>
 </trackSat>
 <satSpread>
-    <val_0>100.000000</val_0>
+    <val_0>45.333336</val_0>
 </satSpread>
 <trackVal>
     <val_0>1.000000</val_0>
 </trackVal>
 <valSpread>
-    <val_0>100.000000</val_0>
+    <val_0>68.000000</val_0>
 </valSpread>
 <bottomHalfOnly>
-    <val_0>0.000000</val_0>
+    <val_0>1.000000</val_0>
 </bottomHalfOnly>
 <useAlphaMask>
-    <val_0>0.000000</val_0>
+    <val_0>1.000000</val_0>
 </useAlphaMask>
