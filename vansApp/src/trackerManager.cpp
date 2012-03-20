@@ -30,6 +30,8 @@ void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alph
 		depthImage.allocate(depth.getWidth(), depth.getHeight());
 	}
     
+    printf(" why are my pixels bad ? -- %i  \n", _rgb.getPixels()[1000]);
+    
 	color = _rgb; 
 	depthImage = depth;
 	
