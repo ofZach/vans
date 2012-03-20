@@ -135,7 +135,8 @@ void colorTracker::track(ofxCvColorImage & colorPixels, ofxCvGrayscaleImage & al
         satRange.val = trackedColor.getSaturation();
         valRange.val = trackedColor.getBrightness();
         
-        unsigned char * testPixels = color.getPixels();
+        
+        unsigned char * testPixels = colorPixels.getPixels();
         unsigned char * resultPixels = trackingResults.getPixels();
         unsigned char * alphaPixels = alphaMask.getPixels();
 
