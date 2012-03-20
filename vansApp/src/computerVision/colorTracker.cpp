@@ -161,13 +161,14 @@ void colorTracker::track(ofxCvColorImage & colorPixels, ofxCvGrayscaleImage & al
             
             bOk = true;
             
-            //temp.set(testPixels[i*3], testPixels[i*3+1], testPixels[i*3+2]);
-            unsigned char * hsv = rgb_to_hsv(testPixels + i*3);
+            temp.set(testPixels[i*3], testPixels[i*3+1], testPixels[i*3+2]);
+            //unsigned char * hsv = rgb_to_hsv(testPixels + i*3);
             
-            hue = hsv[0]; //temp.getHue(); // testPixels[i*3];
-            sat = hsv[1]; //temp.getSaturation(); // testPixels[i*3+1];
-            val = hsv[2]; //temp.getBrightness(); // testPixels[i*3+2];
+            hue = temp.getHue(); // testPixels[i*3];
+            sat = temp.getSaturation(); // testPixels[i*3+1];
+            val = temp.getBrightness(); // testPixels[i*3+2];
             
+            printf("%i %i %i \n", hue, sat, val);
             // handle hue distance!  make it small, like an angle change. 
             
             if (bUseHueRange){
