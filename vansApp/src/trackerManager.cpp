@@ -69,7 +69,8 @@ void trackerManager::update( ofxCvColorImage & _rgb, ofxCvGrayscaleImage & _alph
 		
 	cvAnd(CT.trackingResults.getCvImage(), alpha.getCvImage(), feetImage.getCvImage());
 	feetImage.flagImageChanged();
-	feetImage.blur(5);
+    feetImage.erode_3x3();
+	//feetImage.blur(5);
 	feetFinder.findContours(feetImage, guiPtr->getValueI("minFeetSize"), guiPtr->getValueI("maxFeetSize"), 10, false, false);
 	feetTracker.track(feetFinder, depthImage, guiPtr->getValueI("trackerDist"));
 	

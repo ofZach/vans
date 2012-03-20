@@ -248,19 +248,19 @@
     <val_0>133.166672</val_0>
 </distance>
 <r>
-    <val_0>90.666672</val_0>
+    <val_0>185.000000</val_0>
 </r>
 <g>
-    <val_0>11.000000</val_0>
+    <val_0>18.000000</val_0>
 </g>
 <b>
-    <val_0>60.000000</val_0>
+    <val_0>57.000000</val_0>
 </b>
 <showMasked>
     <val_0>1.000000</val_0>
 </showMasked>
 <minFeetSize>
-    <val_0>338.888885</val_0>
+    <val_0>216.666672</val_0>
 </minFeetSize>
 <maxFeetSize>
     <val_0>7442.222168</val_0>
@@ -287,7 +287,7 @@
     <val_0>1.000000</val_0>
 </trackVal>
 <valSpread>
-    <val_0>68.000000</val_0>
+    <val_0>45.333336</val_0>
 </valSpread>
 <bottomHalfOnly>
     <val_0>1.000000</val_0>

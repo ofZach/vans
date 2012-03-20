@@ -209,18 +209,19 @@ void testApp::draw(){
     float aspectUs = 768.0 / 1024.0;
     float aspectThem = hScreen / wScreen;
     
-    if (aspectUs < aspectThem){
+//    if (aspectUs < aspectThem){
+//        scale = wScreen / 1024.0;
+//        float offset = (hScreen - 768*scale)/2.0;
+//        offsetPt.set(0, offset,0);
+//        
+//        
+//    } else {
         scale = wScreen / 1024.0;
-        float offset = (hScreen - 768*scale)/2.0;
-        offsetPt.set(0, offset,0);
-        
-        
-    } else {
-        scale = hScreen / 768.0;
         float offset = (wScreen - 1024*scale)/2.0;
-        offsetPt.set(offset, 0,0);
+        float offsety = (hScreen - 786*scale);
+        offsetPt.set(offset, offsety+20,0);
         
-    }
+   // }
     
     
 	if( bFirstSetup ){ 
@@ -333,18 +334,10 @@ void testApp::mousePressed(int x, int y, int button){
     float aspectUs = 768.0 / 1024.0;
     float aspectThem = hScreen / wScreen;
     
-    if (aspectUs < aspectThem){
-        scale = wScreen / 1024.0;
-        float offset = (hScreen - 768*scale)/2.0;
-        offsetPt.set(0, offset,0);
-        
-        
-    } else {
-        scale = hScreen / 768.0;
-        float offset = (wScreen - 1024*scale)/2.0;
-        offsetPt.set(offset, 0,0);
-        
-    }
+    scale = wScreen / 1024.0;
+    float offset = (wScreen - 1024*scale)/2.0;
+    float offsety = (hScreen - 786*scale);
+    offsetPt.set(offset, offsety+20,0);
 
     
 /*
